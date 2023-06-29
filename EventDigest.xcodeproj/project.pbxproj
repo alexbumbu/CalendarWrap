@@ -88,6 +88,8 @@
 		DD27E3CC2B51633F00B1E660 /* PhotoPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewController.swift; sourceTree = "<group>"; };
 		DD548DB92B9CBA4800506768 /* GooglePhotosService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePhotosService.swift; sourceTree = "<group>"; };
 		DD548DBB2B9CBB5F00506768 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
+		DD548DBD2B9CD11900506768 /* Config.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.debug.xcconfig; sourceTree = "<group>"; };
+		DD548DBE2B9D19AD00506768 /* Config.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.release.xcconfig; sourceTree = "<group>"; };
 		DD5B1C452A3F91FE00EE545E /* GoogleCalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCalendarService.swift; sourceTree = "<group>"; };
 		DD5B1C472A40732000EE545E /* GoogleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginService.swift; sourceTree = "<group>"; };
 		DD5B1C4B2A40B83800EE545E /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
@@ -180,6 +182,8 @@
 				DD03856629968C5B00F8474F /* Model */,
 				DD038549298C564000F8474F /* UI */,
 				DD03853F298BFC2A00F8474F /* Info.plist */,
+				DD548DBD2B9CD11900506768 /* Config.debug.xcconfig */,
+				DD548DBE2B9D19AD00506768 /* Config.release.xcconfig */,
 			);
 			path = EventDigest;
 			sourceTree = "<group>";
@@ -665,7 +669,7 @@
 		};
 		DD038543298BFC2A00F8474F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 59D8C7C63F40EE4E532651CC /* Pods-EventDigest.debug.xcconfig */;
+			baseConfigurationReference = DD548DBD2B9CD11900506768 /* Config.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -699,7 +703,7 @@
 		};
 		DD038544298BFC2A00F8474F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 74CEA234F051E3FF633EADF1 /* Pods-EventDigest.release.xcconfig */;
+			baseConfigurationReference = DD548DBE2B9D19AD00506768 /* Config.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

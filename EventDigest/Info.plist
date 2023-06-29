@@ -11,7 +11,7 @@
 			<string>facebook</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fbAPP-ID</string>
+				<string>$(FacebookURLScheme)</string>
 			</array>
 		</dict>
 		<dict>
@@ -21,22 +21,22 @@
 			<string>google</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>YOUR_DOT_REVERSED_IOS_CLIENT_ID</string>
+				<string>$(GoogleURLScheme)</string>
 			</array>
 		</dict>
 	</array>
 	<key>FacebookAdvertiserIDCollectionEnabled</key>
 	<false/>
 	<key>FacebookAppID</key>
-	<string>APP-ID</string>
+	<string>$(FacebookAppID)</string>
 	<key>FacebookAutoLogAppEventsEnabled</key>
 	<false/>
 	<key>FacebookClientToken</key>
-	<string>CLIENT-TOKEN</string>
+	<string>$(FacebookClientToken)</string>
 	<key>FacebookDisplayName</key>
-	<string>APP-NAME</string>
+	<string>$(FacebookDisplayName)</string>
 	<key>GIDClientID</key>
-	<string>>YOUR_IOS_CLIENT_ID</string>
+	<string>$(GIDClientID)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

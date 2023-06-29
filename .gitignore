@@ -1,5 +1,9 @@
 .DS_Store
 
+## Config files
+Config.debug.xcconfig
+Config.release.xcconfig
+
 ## User settings
 xcuserdata/
 
