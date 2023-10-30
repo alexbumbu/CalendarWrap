@@ -183,11 +183,11 @@ private extension CreateSummaryPostViewController {
         // scheduledDate must be at least 10 min from now
         scheduledDatePicker.minimumDate = Date(timeIntervalSinceNow: 15*60)
         scheduledDatePicker.date = Date(timeIntervalSinceNow: 60*60)
-        summaryTextView.text = post.summary()
+        summaryTextView.text = generatePostSummary()
     }
     
     func reloadUI() {
-        summaryTextView.text = post.summary()
+        summaryTextView.text = generatePostSummary()
         postButton.isEnabled = !summaryTextView.text.isEmpty
         tableView.reloadData()
     }
@@ -251,6 +251,13 @@ private extension CreateSummaryPostViewController {
                 self?.reloadUI()
             }
         }
+    }
+    
+    func generatePostSummary() -> String {
+        let intro = ""
+        let end = ""
+        
+        return post.summary(introText: intro, endText: end)
     }
 }
 

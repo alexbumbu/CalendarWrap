@@ -34,7 +34,7 @@ struct SummaryPost {
             let startTime = timeFormatter.string(from: event.startTime)
             let eventSummary = "\(event.name), \(event.isOnline ? "online" : location),🕒 \(startTime)\n\n"
             partialResult.append(eventSummary)
-        }.appending("\n") ?? ""
+        } ?? ""
                 
         return "\(introText)\n\(summary)\n\(endText)\n"
     }
