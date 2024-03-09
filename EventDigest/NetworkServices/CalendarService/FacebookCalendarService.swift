@@ -9,18 +9,12 @@ import Foundation
 import FBSDKLoginKit
 import OSLog
 
-enum ApiError: Error {
-    case missingToken
-    case parsing
-    case unknown
-}
-
 private enum Request {
     case pages
     case pageAccessToken(String)
     case events(String, Int, Int)
-    case postTextSummary(String, String, Date)
-    case postPhotoSummary(String, String, String, Date)
+    case createSummaryPost(String, String, String?, Date?)
+    case uploadPhoto(String, String, Bool)
 }
 
 extension Request {
@@ -32,9 +26,9 @@ extension Request {
             return "\(pageId)"
         case .events(let pageId, _, _):
             return "\(pageId)/events"
-        case .postTextSummary(let pageId, _, _):
+        case .createSummaryPost(let pageId, _, _, _):
             return "\(pageId)/feed"
-        case .postPhotoSummary(let pageId, _, _, _):
+        case .uploadPhoto(let pageId, _, _):
             return "\(pageId)/photos"
         }
     }
@@ -47,18 +41,28 @@ extension Request {
             return ["fields": "access_token"]
         case .events(_, let since, let until):
             return ["fields": "name, start_time, place, is_online", "since": since, "until": until]
-        case .postTextSummary(_, let message, let scheduledDate):
-            let timeInterval = Int(scheduledDate.timeIntervalSince1970)
-            return ["message": message, "published": false, "scheduled_publish_time": timeInterval]
-        case .postPhotoSummary(_, let photoURL, let message, let scheduledDate):
-            let timeInterval = Int(scheduledDate.timeIntervalSince1970)
-            return ["url": photoURL, "name": message, "published": false, "scheduled_publish_time": timeInterval]
+        case .createSummaryPost(_, let message, let photoId, let scheduledDate):
+            var params: [String: Any] = ["message": message]
+            if let photoId {
+                params["attached_media"] = "[{\"media_fbid\": \"\(photoId)\"}]"
+            }
+            
+            if let scheduledDate {
+                let timeInterval = Int(scheduledDate.timeIntervalSince1970)
+                params["published"] = false
+                params["unpublished_content_type"] = "SCHEDULED"
+                params["scheduled_publish_time"] = timeInterval
+            }
+            
+            return params
+        case .uploadPhoto(_, let photoURL, let temporary):
+            return ["url": photoURL, "published": false, "temporary": temporary]
         }
     }
     
     var httpMethod: HTTPMethod {
         switch self {
-        case .postTextSummary, .postPhotoSummary:
+        case .createSummaryPost, .uploadPhoto:
             return .post
         default:
             return .get
@@ -104,6 +108,7 @@ typealias Page = Calendar
 struct FacebookCalendarService: CalendarService {
     static var permissions: [String] {[
         "public_profile",
+        "business_management",
         "pages_read_engagement",
         "pages_manage_posts",
         "business_management",
@@ -149,28 +154,28 @@ extension FacebookCalendarService {
         await getCalendars()
     }
     
-    static func postSummaryText(pageId: String, summary: String, scheduledDate: Date) async -> Bool {
+    static func createSummaryPost(pageId: String, summary: String, photoId: String?, scheduledDate: Date?) async -> Bool {
         do {
             let pageToken = try await getPageToken(pageId: pageId)
-            let _ = try await Request.postTextSummary(pageId, summary, scheduledDate).perform(token: pageToken)
+            let _ = try await Request.createSummaryPost(pageId, summary, photoId, scheduledDate).perform(token: pageToken)
+            return true
         } catch {
-            Logger.api.error("postTextSummary failure \(error)")
+            Logger.api.error("createSummaryPost failure \(error)")
             return false
         }
-        
-        return true
     }
     
-    static func postSummaryPhoto(pageId: String, photoURL: String, summary: String, scheduledDate: Date) async -> Bool {
+    /// return photoId or nil on error
+    static func uploadPhoto(pageId: String, photoURL: String, temporary: Bool) async -> String? {
         do {
             let pageToken = try await getPageToken(pageId: pageId)
-            let _ = try await Request.postPhotoSummary(pageId, photoURL, summary, scheduledDate).perform(token: pageToken)
+            let response = try await Request.uploadPhoto(pageId, photoURL, temporary).perform(token: pageToken)
+            
+            return response["id"] as? String
         } catch {
             Logger.api.error("postSummaryPhoto failure \(error)")
-            return false
+            return nil
         }
-        
-        return true
     }
 }
 

@@ -8,29 +8,32 @@
 import UIKit
 import OSLog
 
-private enum Segue: String {
-    case pushLoginSegue
-}
-
-extension Segue: SegueNavigation {
-    var identifier: String { rawValue }
-}
-
 class CreateSummaryPostViewController: UITableViewController, SettingsViewControllerDelegate {
+    
+    private enum Segue: String, SegueNavigation {
+        case pushLoginSegue
+        case showPhotosPickerSegue
+
+        var identifier: String { rawValue }
+    }
+    
     var didUpdateActiveCalendar: (() -> Void)?
     
+    @IBOutlet private weak var publishButton: UIButton!
     @IBOutlet private weak var startTimeDatePicker: UIDatePicker!
     @IBOutlet private weak var endTimeDatePicker: UIDatePicker!
-    @IBOutlet private weak var publishedSwitch: UISwitch!
-    @IBOutlet private weak var scheduledDatePicker: UIDatePicker!
     @IBOutlet private weak var summaryTextView: UITextView!
-    @IBOutlet private weak var postButton: UIBarButtonItem!
+    @IBOutlet private weak var selectedImageContainerView: UIView!
+    @IBOutlet private weak var selectedImageView: UIImageView!
+    @IBOutlet private weak var selectImageButton: UIButton!
+    @IBOutlet private weak var publishNowSwitch: UISwitch!
+    @IBOutlet private weak var scheduledDatePicker: UIDatePicker!
         
     private var routesNavigator = UIRoutesNavigator.shared
     
     private var post: SummaryPost
     
-    private var publishNow: Bool { publishedSwitch.isOn }
+    private var publishNow: Bool { publishNowSwitch.isOn }
     private var scheduledDate: Date { scheduledDatePicker.date }
     
     private var calendarServiceType: CalendarService.Type {
@@ -86,12 +89,29 @@ class CreateSummaryPostViewController: UITableViewController, SettingsViewContro
 
         super.viewWillAppear(animated)
     }
+        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case Segue.showPhotosPickerSegue.identifier:
+            let viewController = (segue.destination as? UINavigationController)?.rootViewController as? PhotosPickerViewController
+            viewController?.didSelectPhoto = { [weak self] photo in
+                if let photoURL = photo.url {
+                    self?.addPhoto(url: photoURL)
+                }
+            }
+        default:
+            return
+        }
+    }
+    
+    @IBAction func unwindToCreateSummaryAction(unwindSegue: UIStoryboardSegue) {
+    }
 }
 
 extension CreateSummaryPostViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath == IndexPath(row: 0, section: 2) {
+        if indexPath.section == 1 {
             return UITableView.automaticDimension
         }
         
@@ -99,7 +119,7 @@ extension CreateSummaryPostViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1 && publishedSwitch.isOn {
+        if section == 2 && publishNowSwitch.isOn {
             return 1
         }
         
@@ -110,7 +130,7 @@ extension CreateSummaryPostViewController {
 extension CreateSummaryPostViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        postButton.isEnabled = !summaryTextView.text.isEmpty
+        publishButton.isEnabled = !summaryTextView.text.isEmpty
     }
 }
 
@@ -157,11 +177,15 @@ private extension CreateSummaryPostViewController {
         }
     }
     
+    @IBAction func removePhotoAction() {
+        removePhoto()
+    }
+    
     @IBAction func publishedSwitchValueChanged(_ sender: UISwitch) {        
         tableView.reloadData()
     }
     
-    @IBAction func postAction() {
+    @IBAction func publishAction() {
         Task {
             if await facebookLogIn(), let page = await selectFacebookPage() {
                 postSummary(pageId: page.id)
@@ -179,22 +203,25 @@ private extension CreateSummaryPostViewController {
         
         startTimeDatePicker.date = startTimeRange
         endTimeDatePicker.date = endTimeRange
-        publishedSwitch.isOn = false
+        
+        summaryTextView.text = generatePostSummary()
+        selectedImageContainerView.isHidden = true
+        
+        publishNowSwitch.isOn = false
         // scheduledDate must be at least 10 min from now
         scheduledDatePicker.minimumDate = Date(timeIntervalSinceNow: 15*60)
         scheduledDatePicker.date = Date(timeIntervalSinceNow: 60*60)
-        summaryTextView.text = generatePostSummary()
     }
     
     func reloadUI() {
         summaryTextView.text = generatePostSummary()
-        postButton.isEnabled = !summaryTextView.text.isEmpty
+        publishButton.isEnabled = !summaryTextView.text.isEmpty
         tableView.reloadData()
     }
     
     func getPublishConfirmation() async -> Bool {
         await withCheckedContinuation({ (continuation: CheckedContinuation<Bool, Never>) in
-            let confirmationAlert = UIAlertController(title: "", message: "Are you sure you want to publish the post? It will make it publicly available right away.", preferredStyle: .alert)
+            let confirmationAlert = UIAlertController(title: "Warning", message: "Are you sure you want to publish the post? It will make it publicly available right away.", preferredStyle: .alert)
             confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
                 continuation.resume(returning: false)
             })
@@ -259,6 +286,27 @@ private extension CreateSummaryPostViewController {
         
         return post.summary(introText: intro, endText: end)
     }
+    
+    func addPhoto(url: URL) {
+        post.imageURL = url
+        
+        selectedImageView.contentMode = .center
+        selectedImageView.af.setImage(withURL: url, placeholderImage: UIImage(systemName: "photo"), completion:  { [weak self] _ in
+            self?.selectedImageView.contentMode = .scaleAspectFit
+        })
+        selectedImageContainerView.isHidden = false
+        
+        tableView.reloadData()
+    }
+    
+    func removePhoto() {
+        post.imageURL = nil
+        
+        selectedImageView.image = nil
+        selectedImageContainerView.isHidden = true
+        
+        tableView.reloadData()
+    }
 }
 
 private extension CreateSummaryPostViewController {
@@ -291,40 +339,35 @@ private extension CreateSummaryPostViewController {
             return
         }
         
-        let date = scheduledDate
-        let postSummary: (SummaryPost) -> Void = { [weak self] post in
+        let date = publishNow ? nil : scheduledDate
+        
+        let this = self
+        let postSummary: (SummaryPost) -> Void = { post in
             Task {
-                var success: Bool
-                if post.imageURL != nil {
-                    success = await FacebookCalendarService.postSummaryPhoto(pageId: pageId,
-                                                                             photoURL: post.imageURL!.absoluteString,
-                                                                             summary: summary,
-                                                                             scheduledDate: date)
-                } else {
-                    success = await FacebookCalendarService.postSummaryText(pageId: pageId,
-                                                                            summary: summary,
-                                                                            scheduledDate: date)
+                var photoId: String?
+                if let photoURL = post.imageURL {
+                    photoId = await FacebookCalendarService.uploadPhoto(pageId: pageId, photoURL: photoURL.absoluteString, temporary: true)
                 }
                 
+                let success = await FacebookCalendarService.createSummaryPost(pageId: pageId, summary: summary, photoId: photoId, scheduledDate: date)
+                
                 if success {
-                    self?.showInfoAlert(title: "Success", message: "Summary posted successfully")
+                    this.showInfoAlert(title: "Success", message: "Summary posted successfully")
                 } else {
-                    self?.showInfoAlert(title: "Error", message: "Posting the summary failure")
+                    this.showInfoAlert(title: "Error", message: "Posting the summary failure")
                 }
             }
         }
-        
-//        post.imageURL = URL(string: "https://www.seiu1000.org/sites/main/files/main-images/camera_lense_0.jpeg")!
                 
-//        if publishNow {
-//            Task {
-//                if await getPublishConfirmation() {
-//                    postSummary(post)
-//                }
-//            }
-//        } else {
+        if publishNow {
+            Task {
+                if await getPublishConfirmation() {
+                    postSummary(post)
+                }
+            }
+        } else {
             postSummary(post)
-//        }
+        }
     }
 }
 

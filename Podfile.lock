@@ -1,4 +1,7 @@
 PODS:
+  - Alamofire (5.7.1)
+  - AlamofireImage (4.2.0):
+    - Alamofire (~> 5.4)
   - AppAuth (1.6.1):
     - AppAuth/Core (= 1.6.1)
     - AppAuth/ExternalUserAgent (= 1.6.1)
@@ -33,6 +36,7 @@ PODS:
   - MBProgressHUD (1.2.0)
 
 DEPENDENCIES:
+  - AlamofireImage
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -42,6 +46,8 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
+    - AlamofireImage
     - AppAuth
     - FBAEMKit
     - FBSDKCoreKit
@@ -55,6 +61,8 @@ SPEC REPOS:
     - MBProgressHUD
 
 SPEC CHECKSUMS:
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
+  AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
   AppAuth: e48b432bb4ba88b10cb2bcc50d7f3af21e78b9c2
   FBAEMKit: c7f82b5145d446bcbbcd50485c032689032fc6a2
   FBSDKCoreKit: 7542746fc63a2a38dd6a865eeb54268341f37b83
@@ -67,6 +75,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: e8647203b65cee28c5f73d0f473d096653945e72
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
 
-PODFILE CHECKSUM: ffdad5adca18a21c64401d8fdc2d52b2a4848ca7
+PODFILE CHECKSUM: 47d4bb9f655ba64c02110c4f15bf4830a506c92b
 
 COCOAPODS: 1.12.1

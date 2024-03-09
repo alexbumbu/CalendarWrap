@@ -54,7 +54,8 @@ extension Request {
 struct GoogleCalendarService: CalendarService {
     
     static var permissions: [String] {[
-        kGTLRAuthScopeCalendar
+        kGTLRAuthScopeCalendar,
+        kGTLRAuthScopePhotosLibrary
     ]}
     
     static func getCalendars() async -> [Calendar]?  {

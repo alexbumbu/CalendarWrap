@@ -8,18 +8,6 @@
 import Foundation
 
 enum Cache {
-        
-    enum Preferences: CaseIterable, Cacheable, DefaultsRegistrable {
-        case useFacebookCalendar
-        case useGoogleCalendar
-    }
-    
-    enum Session: CaseIterable, Cacheable {
-        case currentCalendar
-    }
-}
-
-extension Cache {
     
     static func clear() {
         guard let domain = Bundle.main.bundleIdentifier else {
@@ -28,6 +16,18 @@ extension Cache {
                 
         UserDefaults.standard.removePersistentDomain(forName: domain)
         UserDefaults.standard.synchronize()
+    }
+}
+
+extension Cache {
+    
+    enum Preferences: CaseIterable, Cacheable, DefaultsRegistrable {
+        case useFacebookCalendar
+        case useGoogleCalendar
+    }
+    
+    enum Session: CaseIterable, Cacheable {
+        case currentCalendar
     }
 }
 

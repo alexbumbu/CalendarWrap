@@ -9,15 +9,13 @@ import UIKit
 import FBSDKLoginKit
 import GoogleSignIn
 
-private enum Segue: String {
-    case showCreateSummaryPostSegue
-}
-
-extension Segue: SegueNavigation {
-    var identifier: String { rawValue }
-}
-
 class LoginViewController: UIViewController {
+    
+    private enum Segue: String, SegueNavigation {
+        case showCreateSummaryPostSegue
+        
+        var identifier: String { rawValue }
+    }
     
     @IBOutlet private weak var spinner: UIActivityIndicatorView!
     @IBOutlet private weak var facebookLoginButton: UIButton!
