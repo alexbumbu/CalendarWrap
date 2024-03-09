@@ -105,7 +105,8 @@ struct FacebookCalendarService: CalendarService {
     static var permissions: [String] {[
         "public_profile",
         "pages_read_engagement",
-        "pages_manage_posts"
+        "pages_manage_posts",
+        "business_management",
     ]}
         
     static func getCalendars() async -> [Calendar]? {
