@@ -1,13 +1,13 @@
 # EventDigest
-EventDigest is a straightforward application that enables you to generate a summary of your Google Calendar or Facebook events for a specified time frame and create a corresponding Facebook post.
+EventDigest is a tool to publish calendar events summary posts to personal and business Facebook pages. It works with Google Calendar or Facebook Events and has Google Photos integration to attach photos to posts.
 
 ## Using EventDigest
 Before using EventDigest you need to do the following:
 
-1. Retrieve the Facebook app keys (documentation [here](https://developers.facebook.com/docs/ios/getting-started)) and fill the `Config.debug.xcconfig` and `Config.release.xconfig` files. Look for the `_Config.debug.xconfig` and `_Config.release.xconfig` templates in the repository.\ 
+1. Retrieve the Facebook app keys (documentation [here](https://developers.facebook.com/docs/ios/getting-started)) and fill the `Config.debug.xcconfig` and `Config.release.xconfig` files. Look for the `_Config.debug.xconfig` and `_Config.release.xconfig` templates in the repository.<br />
 Alternatively you can update the `Info.plist` file with your Facebook app keys, just don't forget to change the Project -> Configurations to the CocoaPods ones, or your own.
 
-2. Repeat the process for you Google app info. You can find the documentation [here](https://developers.google.com/identity/sign-in/ios/start-integrating).\
+2. Repeat the process for you Google app info. You can find the documentation [here](https://developers.google.com/identity/sign-in/ios/start-integrating).
 
 3. Install the necessary dependencies by running pod install in your root directory. If you don't have CocoaPods installed, you will need to install it first from [CocoaPods](https://cocoapods.org).
   
