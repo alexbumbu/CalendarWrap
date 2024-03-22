@@ -13,4 +13,5 @@ extension Logger {
     private static var subsystem = Bundle.main.bundleIdentifier!
     
     static let api = Logger(subsystem: subsystem, category: "API")
+    static let ui = Logger(subsystem: subsystem, category: "UI")
 }

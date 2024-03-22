@@ -32,11 +32,15 @@
 		DD27E3CD2B51633F00B1E660 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD27E3CC2B51633F00B1E660 /* PhotoPreviewViewController.swift */; };
 		DD548DBA2B9CBA4800506768 /* GooglePhotosService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD548DB92B9CBA4800506768 /* GooglePhotosService.swift */; };
 		DD548DBC2B9CBB5F00506768 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD548DBB2B9CBB5F00506768 /* ApiError.swift */; };
+		DD59C4FE2BAA0C7E003DCF42 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD59C4FD2BAA0C7E003DCF42 /* Photo.swift */; };
+		DD59C5002BAA0CBD003DCF42 /* PlaceholderPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD59C4FF2BAA0CBD003DCF42 /* PlaceholderPhoto.swift */; };
 		DD5B1C462A3F91FE00EE545E /* GoogleCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C452A3F91FE00EE545E /* GoogleCalendarService.swift */; };
 		DD5B1C482A40732000EE545E /* GoogleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C472A40732000EE545E /* GoogleLoginService.swift */; };
 		DD5B1C4C2A40B83800EE545E /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C4B2A40B83800EE545E /* CalendarService.swift */; };
 		DD5B1C4F2A40C8BE00EE545E /* CalendarMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C4E2A40C8BE00EE545E /* CalendarMapper.swift */; };
 		DD5B1C562A40CF6000EE545E /* CalendarEventMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C552A40CF6000EE545E /* CalendarEventMapper.swift */; };
+		DD5F8CB32BA890000098CA8F /* ToggleAlbumsVisibilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5F8CB22BA890000098CA8F /* ToggleAlbumsVisibilityViewController.swift */; };
+		DD5F8CB72BA895B50098CA8F /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5F8CB62BA895B50098CA8F /* AlbumCell.swift */; };
 		DD5FA4782B6D329A001B0361 /* UINavigationController + Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5FA4772B6D329A001B0361 /* UINavigationController + Root.swift */; };
 		DD6B92D72A40D7F90073FB5A /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6B92D62A40D7F90073FB5A /* LoginService.swift */; };
 		DD6B92D92A40D8050073FB5A /* FacebookLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6B92D82A40D8050073FB5A /* FacebookLoginService.swift */; };
@@ -53,6 +57,8 @@
 		DDE8EA432B4D7F8A009D68DB /* PhotoAlbumMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE8EA422B4D7F8A009D68DB /* PhotoAlbumMapper.swift */; };
 		DDE8EA452B4DB081009D68DB /* GooglePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE8EA442B4DB081009D68DB /* GooglePhoto.swift */; };
 		DDE8EA482B4DC052009D68DB /* GooglePhotoMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE8EA472B4DC052009D68DB /* GooglePhotoMapper.swift */; };
+		DDF7B2562BAD9333009BBC85 /* Photo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDF7B2552BAD9333009BBC85 /* Photo.storyboard */; };
+		DDF7B2582BAD9C36009BBC85 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF7B2572BAD9C36009BBC85 /* Storyboard.swift */; };
 		DDFB3C8E2B9C7BAF002215D4 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB3C8D2B9C7BAF002215D4 /* GradientView.swift */; };
 		DDFB3C902B9C7BBE002215D4 /* WhiteGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB3C8F2B9C7BBE002215D4 /* WhiteGradientView.swift */; };
 		DDFB3C922B9C7CBB002215D4 /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB3C912B9C7CBB002215D4 /* PhotosCollectionViewController.swift */; };
@@ -90,11 +96,15 @@
 		DD548DBB2B9CBB5F00506768 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		DD548DBD2B9CD11900506768 /* Config.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.debug.xcconfig; sourceTree = "<group>"; };
 		DD548DBE2B9D19AD00506768 /* Config.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.release.xcconfig; sourceTree = "<group>"; };
+		DD59C4FD2BAA0C7E003DCF42 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		DD59C4FF2BAA0CBD003DCF42 /* PlaceholderPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderPhoto.swift; sourceTree = "<group>"; };
 		DD5B1C452A3F91FE00EE545E /* GoogleCalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCalendarService.swift; sourceTree = "<group>"; };
 		DD5B1C472A40732000EE545E /* GoogleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginService.swift; sourceTree = "<group>"; };
 		DD5B1C4B2A40B83800EE545E /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
 		DD5B1C4E2A40C8BE00EE545E /* CalendarMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMapper.swift; sourceTree = "<group>"; };
 		DD5B1C552A40CF6000EE545E /* CalendarEventMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventMapper.swift; sourceTree = "<group>"; };
+		DD5F8CB22BA890000098CA8F /* ToggleAlbumsVisibilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleAlbumsVisibilityViewController.swift; sourceTree = "<group>"; };
+		DD5F8CB62BA895B50098CA8F /* AlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
 		DD5FA4772B6D329A001B0361 /* UINavigationController + Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Root.swift"; sourceTree = "<group>"; };
 		DD6B92D62A40D7F90073FB5A /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		DD6B92D82A40D8050073FB5A /* FacebookLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginService.swift; sourceTree = "<group>"; };
@@ -116,6 +126,8 @@
 		DDE8EA422B4D7F8A009D68DB /* PhotoAlbumMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumMapper.swift; sourceTree = "<group>"; };
 		DDE8EA442B4DB081009D68DB /* GooglePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhoto.swift; sourceTree = "<group>"; };
 		DDE8EA472B4DC052009D68DB /* GooglePhotoMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotoMapper.swift; sourceTree = "<group>"; };
+		DDF7B2552BAD9333009BBC85 /* Photo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Photo.storyboard; sourceTree = "<group>"; };
+		DDF7B2572BAD9C36009BBC85 /* Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
 		DDFB3C8D2B9C7BAF002215D4 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		DDFB3C8F2B9C7BBE002215D4 /* WhiteGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteGradientView.swift; sourceTree = "<group>"; };
 		DDFB3C912B9C7CBB002215D4 /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +203,7 @@
 		DD038549298C564000F8474F /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				DDF7B2572BAD9C36009BBC85 /* Storyboard.swift */,
 				DDFB3C8C2B9C7B97002215D4 /* Components */,
 				DD03854E298C60E200F8474F /* Segues */,
 				DD0C807C29FAF14E00DDC73A /* UIRoute.swift */,
@@ -205,6 +218,7 @@
 				DD27E3CC2B51633F00B1E660 /* PhotoPreviewViewController.swift */,
 				DD0C807829FACAE800DDC73A /* SettingsViewController.swift */,
 				DD038537298BFC2800F8474F /* Main.storyboard */,
+				DDF7B2552BAD9333009BBC85 /* Photo.storyboard */,
 				DD03853C298BFC2900F8474F /* LaunchScreen.storyboard */,
 				DD03853A298BFC2900F8474F /* Assets.xcassets */,
 				DD03E83F2B4EBDBC00230364 /* Colors.xcassets */,
@@ -246,8 +260,10 @@
 		DD27E3C82B4F151400B1E660 /* PhotosPickerViewController */ = {
 			isa = PBXGroup;
 			children = (
+				DD59C4FF2BAA0CBD003DCF42 /* PlaceholderPhoto.swift */,
 				DD27E3C92B4F152D00B1E660 /* Reusable Views */,
 				DDFB3C912B9C7CBB002215D4 /* PhotosCollectionViewController.swift */,
+				DD5F8CB22BA890000098CA8F /* ToggleAlbumsVisibilityViewController.swift */,
 				DD27E3C62B4EF22C00B1E660 /* PhotosPickerViewController.swift */,
 			);
 			path = PhotosPickerViewController;
@@ -258,6 +274,7 @@
 			children = (
 				DD27E3CA2B4F156100B1E660 /* PhotoCell.swift */,
 				DD960F722B989DED004B960A /* PhotoAlbumHeaderView.swift */,
+				DD5F8CB62BA895B50098CA8F /* AlbumCell.swift */,
 			);
 			path = "Reusable Views";
 			sourceTree = "<group>";
@@ -353,6 +370,7 @@
 		DDE8EA462B4DC034009D68DB /* GooglePhoto */ = {
 			isa = PBXGroup;
 			children = (
+				DD59C4FD2BAA0C7E003DCF42 /* Photo.swift */,
 				DDE8EA442B4DB081009D68DB /* GooglePhoto.swift */,
 				DDE8EA472B4DC052009D68DB /* GooglePhotoMapper.swift */,
 			);
@@ -430,6 +448,7 @@
 			files = (
 				DD03853E298BFC2900F8474F /* LaunchScreen.storyboard in Resources */,
 				DD03E8402B4EBDBC00230364 /* Colors.xcassets in Resources */,
+				DDF7B2562BAD9333009BBC85 /* Photo.storyboard in Resources */,
 				DD03853B298BFC2900F8474F /* Assets.xcassets in Resources */,
 				DD038539298BFC2800F8474F /* Main.storyboard in Resources */,
 			);
@@ -484,10 +503,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD5F8CB72BA895B50098CA8F /* AlbumCell.swift in Sources */,
 				DD0385612994273800F8474F /* Calendar.swift in Sources */,
 				DD038536298BFC2800F8474F /* LoginViewController.swift in Sources */,
 				DD03855A298DB17A00F8474F /* SummaryPost.swift in Sources */,
 				DD548DBA2B9CBA4800506768 /* GooglePhotosService.swift in Sources */,
+				DD5F8CB32BA890000098CA8F /* ToggleAlbumsVisibilityViewController.swift in Sources */,
 				DD5B1C4C2A40B83800EE545E /* CalendarService.swift in Sources */,
 				DDE8EA432B4D7F8A009D68DB /* PhotoAlbumMapper.swift in Sources */,
 				DDC06A702A4735E100792EDE /* CreateSummaryPostViewController.swift in Sources */,
@@ -496,6 +517,7 @@
 				DDE8EA3D2B4D6E2A009D68DB /* GTLRPhotosLibraryObjects.m in Sources */,
 				DDDF21CF29AE962500360533 /* Cache+Session.swift in Sources */,
 				DD27E3C72B4EF22C00B1E660 /* PhotosPickerViewController.swift in Sources */,
+				DD59C5002BAA0CBD003DCF42 /* PlaceholderPhoto.swift in Sources */,
 				DD5B1C4F2A40C8BE00EE545E /* CalendarMapper.swift in Sources */,
 				DD038552298D3DF000F8474F /* SegueNavigation.swift in Sources */,
 				DD5B1C462A3F91FE00EE545E /* GoogleCalendarService.swift in Sources */,
@@ -511,6 +533,7 @@
 				DD5B1C562A40CF6000EE545E /* CalendarEventMapper.swift in Sources */,
 				DD038558298D8DBF00F8474F /* CalendarEvent.swift in Sources */,
 				DD0C807D29FAF14E00DDC73A /* UIRoute.swift in Sources */,
+				DD59C4FE2BAA0C7E003DCF42 /* Photo.swift in Sources */,
 				DD960F732B989DED004B960A /* PhotoAlbumHeaderView.swift in Sources */,
 				DD038556298D68C600F8474F /* Logger.swift in Sources */,
 				DD0C807B29FAF13E00DDC73A /* UIRouteNavigator.swift in Sources */,
@@ -518,6 +541,7 @@
 				DDE8EA3C2B4D6E2A009D68DB /* GTLRPhotosLibraryQuery.m in Sources */,
 				DD03856529956AEA00F8474F /* Cache.swift in Sources */,
 				DDFB3C8E2B9C7BAF002215D4 /* GradientView.swift in Sources */,
+				DDF7B2582BAD9C36009BBC85 /* Storyboard.swift in Sources */,
 				DD038534298BFC2800F8474F /* SceneDelegate.swift in Sources */,
 				DDE8EA412B4D78E5009D68DB /* PhotoAlbum.swift in Sources */,
 				DD27E3CB2B4F156100B1E660 /* PhotoCell.swift in Sources */,

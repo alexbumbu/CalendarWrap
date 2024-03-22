@@ -7,13 +7,12 @@
 
 import Foundation
 
-class GooglePhoto: NSObject {
+class GooglePhoto: Photo {
     
     private enum Constants {
         static let maxImageSize = CGSize(width: 2048, height: 2048)
     }
     
-    let id: String
     let filename: String
     let mimeType: String
     let size: CGSize
@@ -21,7 +20,7 @@ class GooglePhoto: NSObject {
     private let baseURL: URL
     private let productURL: URL
     
-    var url: URL? {
+    override var url: URL? {
         if size.width > Constants.maxImageSize.width || size.height > Constants.maxImageSize.height {
             return url(size: Constants.maxImageSize, maintainingAspectRatio: true)
         }
@@ -31,12 +30,13 @@ class GooglePhoto: NSObject {
     }
     
     init(id: String, filename: String, mimeType: String, baseURL: URL, productURL: URL, size: CGSize) {
-        self.id = id
         self.filename = filename
         self.mimeType = mimeType
         self.baseURL = baseURL
         self.productURL = productURL
         self.size = size
+        
+        super.init(id: id)
     }
     
     func url(size: CGSize, maintainingAspectRatio: Bool) -> URL? {

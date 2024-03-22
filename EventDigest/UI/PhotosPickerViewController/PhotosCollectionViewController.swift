@@ -9,13 +9,7 @@ import UIKit
 import AlamofireImage
 import MBProgressHUD
 
-private typealias DataSource = UICollectionViewDiffableDataSource<PhotoAlbum, GooglePhoto>
-
-private struct PhotosCollectionViewControllerPage {
-    
-    var album: PhotoAlbum?
-    var albumNextPageToken: String?
-}
+private typealias DataSource = UICollectionViewDiffableDataSource<PhotoAlbum, Photo>
 
 class PhotosCollectionViewController: UICollectionViewController {
     
@@ -29,9 +23,7 @@ class PhotosCollectionViewController: UICollectionViewController {
         static let photoCellIdentifier = "photoCell"
         static let headerViewIdentifier = "headerView"
         static let footerViewIdentifier = "footerView"
-        
-        static let pageSize = 25
-        
+                
         static let cellSize = CGSize(width: 128, height: 128)
         static let footerViewSize = CGSize(width: 0, height: 126)
         
@@ -40,13 +32,22 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     var didSelectPhoto: ((GooglePhoto) -> Void)?
     
-    private var albums = [PhotoAlbum]()
+    private var albums: [PhotoAlbum]
+    private var albumsFetching = [PhotoAlbum]()
     
-    private var nextPage = PhotosCollectionViewControllerPage()
     private var dataSource: DataSource!
     
-    private var fetching = false
     private var photoToPreview: GooglePhoto?
+    
+    init?(albums: [PhotoAlbum], coder: NSCoder) {
+        self.albums = albums
+        super.init(coder: coder)
+    }
+
+    @available(*, unavailable, renamed: "init(albums:coder:)")
+    required init?(coder: NSCoder) {
+        fatalError("Invalid way of decoding this class")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,11 +56,50 @@ class PhotosCollectionViewController: UICollectionViewController {
         collectionView.allowsMultipleSelection = false
         
         setupDataSource()
+    }
+    
+    func reload(albums: [PhotoAlbum]) {
+        self.albums = albums
+        updateDataSource()
+    }
+    
+    func hide(album: PhotoAlbum) {
+        // update albums
+        albums.removeAll(where: { $0 == album })
         
-        Task {
-            await fetchAlbums()
-            await fetchNextPage()
+        // update data source
+        var snapshot = dataSource.snapshot()
+        snapshot.deleteSections([album])
+                
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func show(album: PhotoAlbum, before beforeAlbum: PhotoAlbum?) {
+        // update albums
+        if let beforeAlbum, let index = albums.firstIndex(of: beforeAlbum) {
+            albums.insert(album, at: index)
+        } else {
+            albums.append(album)
         }
+
+        // update data source
+        var snapshot = dataSource.snapshot()
+        
+        if let beforeAlbum {
+            snapshot.insertSections([album], beforeSection: beforeAlbum)
+        } else {
+            snapshot.appendSections([album])
+        }
+
+        var placeholderPhotos = [Photo]()
+        for _ in (album.photos?.count ?? 0) ..< album.photosCount {
+            placeholderPhotos.append(PlaceholderPhoto())
+        }
+        
+        snapshot.appendItems(album.photos ?? [], toSection: album)
+        snapshot.appendItems(placeholderPhotos, toSection: album)
+        
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
     
     @IBSegueAction func showPhotoPreview(_ coder: NSCoder) -> PhotoPreviewViewController? {
@@ -74,27 +114,18 @@ class PhotosCollectionViewController: UICollectionViewController {
 extension PhotosCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        fetchPage(for: indexPath)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        /* because of having dynamic sections (the number of items is not set when the data source is constructed) and
-         relying on collectionView(_:, willDisplay:, forItemAt: IndexPath) for fetching next items, it can end up in a
-         scenario where collectionView(_:, willDisplay:, forItemAt: IndexPath) is not triggered because all the items
-         for the last visible section are loaded and the next sections are empty. As a workaround for this we're using
-         section footers and trigger fetching the next items. */
-        
-        guard elementKind == UICollectionView.elementKindSectionFooter else {
-            return
+        let album = albums[indexPath.section]
+        if !album.photosFetched {
+            Task {
+                await fetchAllPhotos(forAlbum: album)
+            }
         }
-        
-        fetchPage(for: indexPath)
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let album = albums[indexPath.section]
         
-        if let photo = album.photos?[indexPath.item] {
+        if let photo = album.photos?[indexPath.item] as? GooglePhoto {
             didSelectPhoto?(photo)
         }
     }
@@ -115,16 +146,32 @@ extension PhotosCollectionViewController: UICollectionViewDataSourcePrefetching 
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         let downloader = ImageDownloader()
-        
-        for indexPath in indexPaths {
-            guard let photos = albums[indexPath.section].photos, indexPath.item < photos.count else {
-                continue
+
+        let albumsToFetch = indexPaths.reduce(into: Set<PhotoAlbum>()) { result, indexPath in
+            let album = albums[indexPath.section]
+            if !album.photosFetched {
+                result.insert(album)
+            }
+        }
+                
+        Task {
+            // download albums
+            for album in albumsToFetch {
+                await fetchAllPhotos(forAlbum: album)
             }
             
-            let photo = photos[indexPath.item]
-            
-            let urlRequest = URLRequest(url: photo.url(size: Constants.thumbnailSize, maintainingAspectRatio: true)!)
-            downloader.download(urlRequest)
+            // download images
+            for indexPath in indexPaths {
+                guard
+                    let photos = albums[indexPath.section].photos,
+                    let photo = photos[indexPath.item] as? GooglePhoto
+                else {
+                    continue
+                }
+        
+                let urlRequest = URLRequest(url: photo.url(size: Constants.thumbnailSize, maintainingAspectRatio: true)!)
+                downloader.download(urlRequest)
+            }
         }
     }
 }
@@ -132,33 +179,30 @@ extension PhotosCollectionViewController: UICollectionViewDataSourcePrefetching 
 private extension PhotosCollectionViewController {
     
     func setupDataSource() {
-        dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, item in
+        let this = self
+        dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, photo in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.photoCellIdentifier, for: indexPath) as? PhotoCell
-            cell?.didLongPress = { [weak self] in
-                guard let this = self else {
-                    return
-                }
-                
-                this.photoToPreview = item
+            cell?.didLongPress = {
+                this.photoToPreview = photo as? GooglePhoto
                 Segue.showPhotoPreviewSegue.perform(in: this, sender: nil)
             }
             
-            cell?.imageView.af.setImage(withURL: item.url(size: Constants.thumbnailSize, maintainingAspectRatio: true)!, placeholderImage: UIImage(systemName: "photo"))
+            if let photo = photo as? GooglePhoto {
+                cell?.imageView.af.setImage(withURL: photo.url(size: Constants.thumbnailSize, maintainingAspectRatio: true)!, placeholderImage: UIImage(systemName: "photo"))
+            } else {
+                cell?.imageView.image = UIImage(systemName: "photo")
+            }
             
             return cell
         })
         
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let this = self else {
-                return nil
-            }
-            
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
             switch kind {
             case UICollectionView.elementKindSectionHeader:
                 let album = this.albums[indexPath.section]
                 
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.headerViewIdentifier, for: indexPath) as? PhotoAlbumHeaderView
-                headerView?.titleNameLabel.text = "\(album.title) (\(album.photos?.count ?? 0)/\(album.photosCount))"
+                headerView?.titleNameLabel.text = album.title
                 
                 return headerView
                 
@@ -174,112 +218,68 @@ private extension PhotosCollectionViewController {
     }
     
     func updateDataSource() {
-        var updatesSnapshot = NSDiffableDataSourceSnapshot<PhotoAlbum, GooglePhoto>()
+        var updatesSnapshot = NSDiffableDataSourceSnapshot<PhotoAlbum, Photo>()
         for album in albums {
+            var placeholderPhotos = [PlaceholderPhoto]()
+            for _ in (album.photos?.count ?? 0) ..< album.photosCount {
+                placeholderPhotos.append(PlaceholderPhoto())
+            }
+            
             updatesSnapshot.appendSections([album])
-            updatesSnapshot.appendItems([], toSection: album)
+            updatesSnapshot.appendItems(album.photos ?? [], toSection: album)
+            updatesSnapshot.appendItems(placeholderPhotos, toSection: album)
         }
         
         dataSource.apply(updatesSnapshot, animatingDifferences: true)
     }
     
-    func fetchAlbums() async {
-        let progressHUD = MBProgressHUD.showAdded(to: view, animated: true)
-        guard let albums = await GooglePhotosService.getAlbums() else {
-            progressHUD.hide(animated: true)
-            // TODO: show error alert
+    func reloadDataSource(forAlbum album: PhotoAlbum, animatingDifferences: Bool) {
+        var snapshot = dataSource.snapshot(for: album)
+        
+        // avoid race condition - check if album is hidden
+        guard !snapshot.items.isEmpty else {
             return
         }
         
-        progressHUD.hide(animated: true)
-        
-        self.albums = albums
-        
-        await MainActor.run {
-            updateDataSource()
-        }
-    }
-    
-    func fetchPhotos(forAlbum albumId: String, pageToken: String?) async -> Int {
-        let response = await GooglePhotosService.getPhotos(albumId: albumId, pageToken: pageToken)
-        guard let album = albums.first(where: { $0.id == albumId }) else {
-            return 0
+        var placeholderPhotos = [PlaceholderPhoto]()
+        for _ in (album.photos?.count ?? 0) ..< album.photosCount {
+            placeholderPhotos.append(PlaceholderPhoto())
         }
         
-        if album.photos == nil {
-            album.photos = [GooglePhoto]()
-        }
-                
-        nextPage.albumNextPageToken = response.nextPageToken
-        
-        guard let photos = response.photos else {
-            return 0
-        }
-        
-        album.photos?.append(contentsOf: photos)
-                
-        var snapshot = dataSource.snapshot()
-        snapshot.appendItems(photos, toSection: album)
-        
-        await MainActor.run {
-            dataSource.apply(snapshot, animatingDifferences: true)
-        }
-        
-        return photos.count
-    }
-    
-    func fetchNextPage() async {
-        guard !fetching else {
-            return
-        }
-        
-        fetching = true
+        snapshot.deleteAll()
+        snapshot.append(album.photos ?? [])
+        snapshot.append(placeholderPhotos)
             
-        // when nextPage.album is nil set it to the first album
-        if nextPage.album == nil {
-            nextPage.album = albums.first
-        }
-        
-        var fetchedPhotosCount = 0
-                
-        // process the albums until the desired page size is reached
-        while let album = nextPage.album, fetchedPhotosCount < Constants.pageSize {
-            repeat {
-                let count = await fetchPhotos(forAlbum: album.id, pageToken: nextPage.albumNextPageToken)
-                fetchedPhotosCount += count
-            } while fetchedPhotosCount < Constants.pageSize && nextPage.albumNextPageToken != nil
-            
-            // move to the next album if all photos from the current album have been fetched
-            if nextPage.albumNextPageToken == nil {
-                if let currentIndex = albums.firstIndex(where: { $0.id == album.id }), currentIndex + 1 < albums.count {
-                    nextPage.album = albums[currentIndex + 1]
-                } else {
-                    break
-                }
-            }
-        }
-        
-        fetching = false
-    }
-    
-    func fetchPage(for indexPath: IndexPath) {
-        var shouldFetch = false
-        let albumToDisplay = albums[indexPath.section]
-        
-        if let photos = albumToDisplay.photos {
-            if photos.count < albumToDisplay.photosCount {
-                shouldFetch = true
-            }
-        } else {
-            shouldFetch = true
-        }
-        
-        guard shouldFetch else {
-            return
-        }
-        
         Task {
-            await fetchNextPage()
+            dataSource.apply(snapshot, to: album, animatingDifferences: animatingDifferences)
         }
+    }
+    
+    func fetchAllPhotos(forAlbum album: PhotoAlbum) async {
+        guard !albumsFetching.contains(where: { $0 == album }) else {
+            return
+        }
+                
+        albumsFetching.append(album)
+        
+        var nextPageToken: String?
+        var photos = [GooglePhoto]()
+                
+        // TODO: Check if Google SDK support for retrieving all photos is better
+        repeat {
+            let response = await GooglePhotosService.getPhotos(albumId: album.id, pageToken: nextPageToken)
+            if let fetchedPhotos = response.photos {
+                photos.append(contentsOf: fetchedPhotos)
+                album.photos = photos
+                                
+                reloadDataSource(forAlbum: album, animatingDifferences: false)
+            }
+                        
+            nextPageToken = response.nextPageToken
+        } while nextPageToken != nil
+        
+        albumsFetching.removeAll { $0 == album }
+        
+        return
     }
 }

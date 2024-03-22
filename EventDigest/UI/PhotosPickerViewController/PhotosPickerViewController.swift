@@ -6,33 +6,52 @@
 //
 
 import UIKit
+import MBProgressHUD
+import OSLog
+
+private enum AlbumError: Error {
+    case albumAlreadyVisible
+    case albumNotFound
+}
 
 class PhotosPickerViewController: UIViewController {
-    
-    private enum Segue: String, SegueNavigation {
-        case embedPhotosCollectionSegue
-        
-        var identifier: String { rawValue }
-    }
     
     var didSelectPhoto: ((GooglePhoto) -> Void)?
     
     @IBOutlet private weak var usePhotoButton: UIButton!
     
+    private weak var photosCollectionViewController: PhotosCollectionViewController?
+    
+    private var albums = [PhotoAlbum]()
+    private var hiddenAlbums = [PhotoAlbum]()
     private var selectedPhoto: GooglePhoto? {
         didSet {
             usePhotoButton.isEnabled = true
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Segue.embedPhotosCollectionSegue.identifier {
-            if let viewController = segue.destination as? PhotosCollectionViewController {
-                viewController.didSelectPhoto = { [weak self] photo in
-                    self?.selectedPhoto = photo
-                }
-            }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        Task {
+            let progressHUD = MBProgressHUD.showAdded(to: view, animated: true)
+            
+            await fetchAlbums()
+            photosCollectionViewController?.reload(albums: albums)
+            
+            progressHUD.hide(animated: true)
         }
+    }
+    
+    @IBSegueAction func embedPhotosCollection(_ coder: NSCoder) -> PhotosCollectionViewController? {
+        let viewController =  PhotosCollectionViewController(albums: albums, coder: coder)
+        viewController?.didSelectPhoto = { [weak self] photo in
+            self?.selectedPhoto = photo
+        }
+        
+        photosCollectionViewController = viewController
+        
+        return viewController
     }
     
     @IBAction func usePhotoAction() {
@@ -42,5 +61,86 @@ class PhotosPickerViewController: UIViewController {
         
         didSelectPhoto?(selectedPhoto)
         dismiss(animated: true)
+    }
+    
+    @IBAction func showAlbumsVisibilityToggleAction(_ sender: Any) {
+        let vc: ToggleAlbumsVisibilityViewController = Storyboard.Photo.instantiateViewController(creator: { [weak self] coder in
+            ToggleAlbumsVisibilityViewController(albums: self?.albums ?? [PhotoAlbum](),
+                                     hiddenAlbums: self?.hiddenAlbums ?? [PhotoAlbum](),
+                                     coder: coder)
+        })
+        
+        let this = self
+        vc.didHideAlbum = { [weak self] album in
+            self?.hiddenAlbums.append(album)
+            self?.photosCollectionViewController?.hide(album: album)
+        }
+        vc.didShowAlbum = { album in
+            do {
+                let beforeAlbum = try this.getBeforeAlbum(album: album)
+                this.photosCollectionViewController?.show(album: album, before: beforeAlbum)
+            } catch {
+                Logger.ui.error("error retrieving beforeAlbum: \(error)")
+                return
+            }
+            
+            this.hiddenAlbums.removeAll(where: { $0 == album })
+        }
+        
+        vc.preferredContentSize = CGSize(width: view.bounds.width * 0.66, height: view.bounds.height * 0.4)
+        vc.modalPresentationStyle = .popover
+        if let pres = vc.presentationController {
+            pres.delegate = self
+        }
+        
+        self.present(vc, animated: true)
+        if let pop = vc.popoverPresentationController {
+            pop.sourceView = (sender as! UIView)
+            pop.sourceRect = (sender as! UIView).bounds
+        }
+    }
+}
+
+extension PhotosPickerViewController: UIPopoverPresentationControllerDelegate {
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
+    }
+}
+
+private extension PhotosPickerViewController {
+    
+    func fetchAlbums() async {
+        guard let albums = await GooglePhotosService.getAlbums() else {
+            // TODO: show error alert
+            return
+        }
+                
+        self.albums = albums
+    }
+    
+    func getBeforeAlbum(album: PhotoAlbum) throws -> PhotoAlbum? {
+        var visibleAlbums = [PhotoAlbum]()
+        for album in albums {
+            if !hiddenAlbums.contains(album) {
+                visibleAlbums.append(album)
+            }
+        }
+        
+        if let index = visibleAlbums.firstIndex(of: album) {
+            throw AlbumError.albumAlreadyVisible
+        }
+        
+        guard let index = albums.firstIndex(of: album) else {
+            throw AlbumError.albumNotFound
+        }
+        
+        for visibleAlbum in visibleAlbums {
+            if let a = albums.firstIndex(of: visibleAlbum), a > index {
+                return visibleAlbum
+            }
+        }
+        
+        return nil
     }
 }

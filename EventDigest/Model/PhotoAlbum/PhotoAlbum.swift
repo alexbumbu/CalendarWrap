@@ -13,14 +13,18 @@ class PhotoAlbum: NSObject {
     let photosCount: Int
     let coverPhotoBaseUrl: URL
     let productUrl: URL
-    var photos: [GooglePhoto]?
     
-    init(id: String, title: String, photosCount: Int, coverPhotoBaseUrl: URL, productUrl: URL, photos: [GooglePhoto]? = nil) {
+    var photos: [Photo]?
+    
+    var photosFetched: Bool {
+        photos != nil
+    }
+    
+    init(id: String, title: String, photosCount: Int, coverPhotoBaseUrl: URL, productUrl: URL) {
         self.id = id
         self.title = title
         self.photosCount = photosCount
         self.coverPhotoBaseUrl = coverPhotoBaseUrl
         self.productUrl = productUrl
-        self.photos = photos
     }
 }
