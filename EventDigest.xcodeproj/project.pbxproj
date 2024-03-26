@@ -59,6 +59,7 @@
 		DDE8EA482B4DC052009D68DB /* GooglePhotoMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE8EA472B4DC052009D68DB /* GooglePhotoMapper.swift */; };
 		DDF7B2562BAD9333009BBC85 /* Photo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDF7B2552BAD9333009BBC85 /* Photo.storyboard */; };
 		DDF7B2582BAD9C36009BBC85 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF7B2572BAD9C36009BBC85 /* Storyboard.swift */; };
+		DDF7B25A2BB32A2E009BBC85 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDF7B2592BB32A2E009BBC85 /* Settings.storyboard */; };
 		DDFB3C8E2B9C7BAF002215D4 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB3C8D2B9C7BAF002215D4 /* GradientView.swift */; };
 		DDFB3C902B9C7BBE002215D4 /* WhiteGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB3C8F2B9C7BBE002215D4 /* WhiteGradientView.swift */; };
 		DDFB3C922B9C7CBB002215D4 /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB3C912B9C7CBB002215D4 /* PhotosCollectionViewController.swift */; };
@@ -128,6 +129,7 @@
 		DDE8EA472B4DC052009D68DB /* GooglePhotoMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePhotoMapper.swift; sourceTree = "<group>"; };
 		DDF7B2552BAD9333009BBC85 /* Photo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Photo.storyboard; sourceTree = "<group>"; };
 		DDF7B2572BAD9C36009BBC85 /* Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
+		DDF7B2592BB32A2E009BBC85 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		DDFB3C8D2B9C7BAF002215D4 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		DDFB3C8F2B9C7BBE002215D4 /* WhiteGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteGradientView.swift; sourceTree = "<group>"; };
 		DDFB3C912B9C7CBB002215D4 /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				DD27E3CC2B51633F00B1E660 /* PhotoPreviewViewController.swift */,
 				DD0C807829FACAE800DDC73A /* SettingsViewController.swift */,
 				DD038537298BFC2800F8474F /* Main.storyboard */,
+				DDF7B2592BB32A2E009BBC85 /* Settings.storyboard */,
 				DDF7B2552BAD9333009BBC85 /* Photo.storyboard */,
 				DD03853C298BFC2900F8474F /* LaunchScreen.storyboard */,
 				DD03853A298BFC2900F8474F /* Assets.xcassets */,
@@ -449,6 +452,7 @@
 				DD03853E298BFC2900F8474F /* LaunchScreen.storyboard in Resources */,
 				DD03E8402B4EBDBC00230364 /* Colors.xcassets in Resources */,
 				DDF7B2562BAD9333009BBC85 /* Photo.storyboard in Resources */,
+				DDF7B25A2BB32A2E009BBC85 /* Settings.storyboard in Resources */,
 				DD03853B298BFC2900F8474F /* Assets.xcassets in Resources */,
 				DD038539298BFC2800F8474F /* Main.storyboard in Resources */,
 			);

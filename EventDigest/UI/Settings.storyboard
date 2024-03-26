@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lGd-ZQ-CI3">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Settings-->
+        <scene sceneID="wFr-E0-RP5">
+            <objects>
+                <tableViewController id="0xc-zb-a4J" customClass="SettingsViewController" customModule="EventDigest" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="40" estimatedSectionFooterHeight="-1" id="sDX-0b-QVW">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="l4V-LG-i7D">
+                            <rect key="frame" x="0.0" y="304.33333396911621" width="393" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E4B-iA-X8D">
+                                    <rect key="frame" x="8" y="5" width="377" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="AJE-7e-MGZ"/>
+                                    </constraints>
+                                    <color key="tintColor" systemColor="systemRedColor"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="Logout"/>
+                                    <connections>
+                                        <action selector="logoutAction" destination="0xc-zb-a4J" eventType="touchUpInside" id="Bak-l6-eaz"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="E4B-iA-X8D" firstAttribute="leading" secondItem="l4V-LG-i7D" secondAttribute="leading" constant="8" id="6YS-zd-DAv"/>
+                                <constraint firstItem="E4B-iA-X8D" firstAttribute="centerX" secondItem="l4V-LG-i7D" secondAttribute="centerX" id="Bq7-46-IfI"/>
+                                <constraint firstAttribute="bottom" secondItem="E4B-iA-X8D" secondAttribute="bottom" constant="4" id="gD4-n2-DMu"/>
+                            </constraints>
+                        </view>
+                        <sections>
+                            <tableViewSection headerTitle="Current calendar" id="jk7-cL-e7f">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="WrQ-IW-L96">
+                                        <rect key="frame" x="20" y="55.333332061767578" width="353" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WrQ-IW-L96" id="nHp-mX-8Dm">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Uy-D0-ACh">
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0Uy-D0-ACh" secondAttribute="trailing" constant="20" symbolic="YES" id="Lqa-jP-Lrs"/>
+                                                <constraint firstItem="0Uy-D0-ACh" firstAttribute="centerY" secondItem="nHp-mX-8Dm" secondAttribute="centerY" id="N2Y-WC-YQV"/>
+                                                <constraint firstItem="0Uy-D0-ACh" firstAttribute="leading" secondItem="nHp-mX-8Dm" secondAttribute="leading" constant="20" symbolic="YES" id="xFo-7n-957"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Calendar settings" id="9O6-Ae-3u9">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="ikV-po-1Z4">
+                                        <rect key="frame" x="20" y="176.99999809265137" width="353" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ikV-po-1Z4" id="7AB-NG-EmH">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Facebook calendar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ia2-E3-oNC">
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="179" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="rmX-eA-mkl"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jqb-IZ-Apv">
+                                                    <rect key="frame" x="284" y="6.3333333333333321" width="51" height="30.999999999999996"/>
+                                                    <connections>
+                                                        <action selector="facebookCalendarToggleAction" destination="0xc-zb-a4J" eventType="valueChanged" id="H3i-Dh-wFz"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Ia2-E3-oNC" firstAttribute="leading" secondItem="7AB-NG-EmH" secondAttribute="leading" constant="20" symbolic="YES" id="VjM-0u-Gy6"/>
+                                                <constraint firstItem="jqb-IZ-Apv" firstAttribute="centerY" secondItem="7AB-NG-EmH" secondAttribute="centerY" id="aah-Ds-cmG"/>
+                                                <constraint firstItem="jqb-IZ-Apv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ia2-E3-oNC" secondAttribute="trailing" constant="16" id="ith-li-MDf"/>
+                                                <constraint firstAttribute="trailing" secondItem="jqb-IZ-Apv" secondAttribute="trailing" constant="20" symbolic="YES" id="kfA-y8-xzC"/>
+                                                <constraint firstItem="Ia2-E3-oNC" firstAttribute="centerY" secondItem="7AB-NG-EmH" secondAttribute="centerY" id="z2o-qc-S9w"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Rae-A7-L8i">
+                                        <rect key="frame" x="20" y="220.66666603088379" width="353" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rae-A7-L8i" id="wwe-3O-aNk">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Google calendar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLx-PT-bEe">
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="159" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="X0b-Fm-AUg"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UrU-oR-XmR">
+                                                    <rect key="frame" x="284" y="6.3333333333333321" width="51" height="30.999999999999996"/>
+                                                    <connections>
+                                                        <action selector="googleCalendarToggleAction" destination="0xc-zb-a4J" eventType="valueChanged" id="NA9-V6-YN6"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="kLx-PT-bEe" firstAttribute="leading" secondItem="wwe-3O-aNk" secondAttribute="leading" constant="20" symbolic="YES" id="N7M-kk-YSN"/>
+                                                <constraint firstItem="kLx-PT-bEe" firstAttribute="centerY" secondItem="wwe-3O-aNk" secondAttribute="centerY" id="QUr-7x-0b7"/>
+                                                <constraint firstAttribute="trailing" secondItem="UrU-oR-XmR" secondAttribute="trailing" constant="20" symbolic="YES" id="Qth-YH-b3N"/>
+                                                <constraint firstItem="UrU-oR-XmR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kLx-PT-bEe" secondAttribute="trailing" constant="16" id="lOP-Ic-FOP"/>
+                                                <constraint firstItem="UrU-oR-XmR" firstAttribute="centerY" secondItem="wwe-3O-aNk" secondAttribute="centerY" id="rIR-kp-NC0"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="0xc-zb-a4J" id="LW2-QW-Qxe"/>
+                            <outlet property="delegate" destination="0xc-zb-a4J" id="guf-iT-men"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="Rhh-bj-uc9">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="ptd-M9-wR7">
+                            <connections>
+                                <action selector="doneAction" destination="0xc-zb-a4J" id="heG-yZ-7gk"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="currentCalendarLabel" destination="0Uy-D0-ACh" id="5wM-J5-ked"/>
+                        <outlet property="facebookCalendarSwitch" destination="jqb-IZ-Apv" id="fZf-rI-5hA"/>
+                        <outlet property="googleCalendarSwitch" destination="UrU-oR-XmR" id="xCI-Od-3w8"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Ys-hT-y9Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="737" y="63"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1Ng-lR-JkQ">
+            <objects>
+                <navigationController id="lGd-ZQ-CI3" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hDY-ah-3f8">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="0xc-zb-a4J" kind="relationship" relationship="rootViewController" destinationCreationSelector="showSettingsWithCoder:sender:segueIdentifier:" id="pYA-8g-cMH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="omW-f7-Ny1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-124" y="64"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
