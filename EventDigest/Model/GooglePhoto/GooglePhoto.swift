@@ -7,7 +7,7 @@
 
 import Foundation
 
-class GooglePhoto: Photo {
+final class GooglePhoto: Photo {
     
     private enum Constants {
         static let maxImageSize = CGSize(width: 2048, height: 2048)
@@ -29,6 +29,10 @@ class GooglePhoto: Photo {
         return url(size: size, maintainingAspectRatio: false)
     }
     
+    override var orientation: Photo.Orientation {
+        size.width > size.height ? .landscape : .portrait
+    }
+            
     init(id: String, filename: String, mimeType: String, baseURL: URL, productURL: URL, size: CGSize) {
         self.filename = filename
         self.mimeType = mimeType

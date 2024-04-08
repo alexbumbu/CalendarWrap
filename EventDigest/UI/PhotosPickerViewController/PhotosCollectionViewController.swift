@@ -25,9 +25,6 @@ class PhotosCollectionViewController: UICollectionViewController {
         static let footerViewIdentifier = "footerView"
                 
         static let cellSize = CGSize(width: 128, height: 128)
-        static let footerViewSize = CGSize(width: 0, height: 126)
-        
-        static let thumbnailSize = cellSize.applying(CGAffineTransform(scaleX: UIScreen.main.scale, y: UIScreen.main.scale))
     }
     
     var didSelectPhoto: ((GooglePhoto) -> Void)?
@@ -36,8 +33,9 @@ class PhotosCollectionViewController: UICollectionViewController {
     private var albumsFetching = [PhotoAlbum]()
     
     private var dataSource: DataSource!
-    
     private var photoToPreview: GooglePhoto?
+    
+    private let imagedownloader = ImageDownloader()
     
     init?(albums: [PhotoAlbum], coder: NSCoder) {
         self.albums = albums
@@ -51,10 +49,8 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView.allowsSelection = true
-        collectionView.allowsMultipleSelection = false
-        
+
+        setupCollectionView()
         setupDataSource()
     }
     
@@ -131,22 +127,9 @@ extension PhotosCollectionViewController {
     }
 }
 
-extension PhotosCollectionViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard section == albums.count-1 else {
-            return CGSize(width: 0, height: 1)
-        }
-        
-        return Constants.footerViewSize
-    }
-}
-
 extension PhotosCollectionViewController: UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let downloader = ImageDownloader()
-
         let albumsToFetch = indexPaths.reduce(into: Set<PhotoAlbum>()) { result, indexPath in
             let album = albums[indexPath.section]
             if !album.photosFetched {
@@ -164,19 +147,37 @@ extension PhotosCollectionViewController: UICollectionViewDataSourcePrefetching 
             for indexPath in indexPaths {
                 guard
                     let photos = albums[indexPath.section].photos,
+                    indexPath.item < photos.count,
                     let photo = photos[indexPath.item] as? GooglePhoto
                 else {
                     continue
                 }
-        
-                let urlRequest = URLRequest(url: photo.url(size: Constants.thumbnailSize, maintainingAspectRatio: true)!)
-                downloader.download(urlRequest)
+                
+                let thumbnailSize = thumbnailSizeForItem(at: indexPath)
+                let urlRequest = URLRequest(url: photo.url(size: thumbnailSize, maintainingAspectRatio: true)!)
+                imagedownloader.download(urlRequest)
             }
         }
     }
 }
 
 private extension PhotosCollectionViewController {
+    
+    func setupCollectionView() {
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = false
+        
+        let layout = PhotosGridCollectionViewLayout()
+        layout.photoForIndexPath = { [weak self] indexPath in
+            guard let photos = self?.albums[indexPath.section].photos, photos.count > indexPath.item else {
+                return PlaceholderPhoto()
+            }
+            
+            return photos[indexPath.item]
+        }
+        
+        collectionView.collectionViewLayout = layout
+    }
     
     func setupDataSource() {
         let this = self
@@ -187,10 +188,22 @@ private extension PhotosCollectionViewController {
                 Segue.showPhotoPreviewSegue.perform(in: this, sender: nil)
             }
             
+            // placeholder photo
+            cell?.imageView.image = UIImage(systemName: "photo")
+            cell?.imageView.contentMode = .center
+            
             if let photo = photo as? GooglePhoto {
-                cell?.imageView.af.setImage(withURL: photo.url(size: Constants.thumbnailSize, maintainingAspectRatio: true)!, placeholderImage: UIImage(systemName: "photo"))
-            } else {
-                cell?.imageView.image = UIImage(systemName: "photo")
+                let thumbnailSize = this.thumbnailSizeForItem(at: indexPath)
+                
+                if let url = photo.url(size: thumbnailSize, maintainingAspectRatio: true) {
+                    cell?.imageView.af.imageDownloader = this.imagedownloader
+                    // using the setImage(withURL:) completion handler, instead of setImage(withURL:) completion, to avoid issues with having the wrong contentMode for the placeholder photo
+                    cell?.imageView.af.setImage(withURL: url, imageTransition: .custom(duration: 0, animationOptions: .beginFromCurrentState, animations: { imageView, image in
+                        imageView.image = image
+                    }, completion: { _ in
+                        cell?.imageView.contentMode = .scaleAspectFill
+                    }))
+                }
             }
             
             return cell
@@ -281,5 +294,12 @@ private extension PhotosCollectionViewController {
         albumsFetching.removeAll { $0 == album }
         
         return
+    }
+    
+    func thumbnailSizeForItem(at indexPath: IndexPath) -> CGSize {
+        let itemSize = (collectionView.collectionViewLayout as? PhotosGridCollectionViewLayout)?.sizeForItem(at: indexPath)
+        let thumbnailSize = (itemSize ?? Constants.cellSize).applying(CGAffineTransform(scaleX: UIScreen.main.scale, y: UIScreen.main.scale))
+                
+        return thumbnailSize
     }
 }

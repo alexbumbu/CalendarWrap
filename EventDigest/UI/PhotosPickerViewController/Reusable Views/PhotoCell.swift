@@ -40,6 +40,7 @@ class PhotoCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        imageView.contentMode = .center
         imageView.image = nil
     }
 }

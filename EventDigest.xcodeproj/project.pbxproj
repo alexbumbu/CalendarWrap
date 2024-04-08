@@ -60,6 +60,7 @@
 		DDF7B2562BAD9333009BBC85 /* Photo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDF7B2552BAD9333009BBC85 /* Photo.storyboard */; };
 		DDF7B2582BAD9C36009BBC85 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF7B2572BAD9C36009BBC85 /* Storyboard.swift */; };
 		DDF7B25A2BB32A2E009BBC85 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDF7B2592BB32A2E009BBC85 /* Settings.storyboard */; };
+		DDF7B25C2BBEC4D9009BBC85 /* PhotosGridCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF7B25B2BBEC4D9009BBC85 /* PhotosGridCollectionViewLayout.swift */; };
 		DDFB3C8E2B9C7BAF002215D4 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB3C8D2B9C7BAF002215D4 /* GradientView.swift */; };
 		DDFB3C902B9C7BBE002215D4 /* WhiteGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB3C8F2B9C7BBE002215D4 /* WhiteGradientView.swift */; };
 		DDFB3C922B9C7CBB002215D4 /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB3C912B9C7CBB002215D4 /* PhotosCollectionViewController.swift */; };
@@ -130,6 +131,7 @@
 		DDF7B2552BAD9333009BBC85 /* Photo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Photo.storyboard; sourceTree = "<group>"; };
 		DDF7B2572BAD9C36009BBC85 /* Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
 		DDF7B2592BB32A2E009BBC85 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		DDF7B25B2BBEC4D9009BBC85 /* PhotosGridCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosGridCollectionViewLayout.swift; sourceTree = "<group>"; };
 		DDFB3C8D2B9C7BAF002215D4 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		DDFB3C8F2B9C7BBE002215D4 /* WhiteGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhiteGradientView.swift; sourceTree = "<group>"; };
 		DDFB3C912B9C7CBB002215D4 /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 			children = (
 				DD59C4FF2BAA0CBD003DCF42 /* PlaceholderPhoto.swift */,
 				DD27E3C92B4F152D00B1E660 /* Reusable Views */,
+				DDF7B25B2BBEC4D9009BBC85 /* PhotosGridCollectionViewLayout.swift */,
 				DDFB3C912B9C7CBB002215D4 /* PhotosCollectionViewController.swift */,
 				DD5F8CB22BA890000098CA8F /* ToggleAlbumsVisibilityViewController.swift */,
 				DD27E3C62B4EF22C00B1E660 /* PhotosPickerViewController.swift */,
@@ -533,6 +536,7 @@
 				DDDF21CA29A68D1700360533 /* UIViewController + Spinner.swift in Sources */,
 				DDE8EA3B2B4D6E2A009D68DB /* GTLRPhotosLibraryService.m in Sources */,
 				DDDF21CD29AE957400360533 /* Cache+Preferences.swift in Sources */,
+				DDF7B25C2BBEC4D9009BBC85 /* PhotosGridCollectionViewLayout.swift in Sources */,
 				DD548DBC2B9CBB5F00506768 /* ApiError.swift in Sources */,
 				DD5B1C562A40CF6000EE545E /* CalendarEventMapper.swift in Sources */,
 				DD038558298D8DBF00F8474F /* CalendarEvent.swift in Sources */,
