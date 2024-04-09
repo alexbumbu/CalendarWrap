@@ -106,6 +106,17 @@ class CreateSummaryPostViewController: UITableViewController, SettingsViewContro
     
     @IBAction func unwindToCreateSummaryAction(unwindSegue: UIStoryboardSegue) {
     }
+    
+    @objc func refreshSummary() {
+        Task {
+            await getEvents(serviceType: calendarServiceType)
+            
+            await MainActor.run {
+                tableView.refreshControl?.endRefreshing()
+                reloadUI()
+            }
+        }
+    }
 }
 
 extension CreateSummaryPostViewController {
@@ -198,6 +209,9 @@ private extension CreateSummaryPostViewController {
 private extension CreateSummaryPostViewController {
     
     func setupUI() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshSummary), for: .valueChanged)
+        
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
         

@@ -197,7 +197,7 @@ private extension PhotosCollectionViewController {
                 
                 if let url = photo.url(size: thumbnailSize, maintainingAspectRatio: true) {
                     cell?.imageView.af.imageDownloader = this.imagedownloader
-                    // using the setImage(withURL:) completion handler, instead of setImage(withURL:) completion, to avoid issues with having the wrong contentMode for the placeholder photo
+                    // using the imageTransition completion handler, instead of setImage(withURL:) completion, to avoid issues with having the wrong contentMode for the placeholder photo
                     cell?.imageView.af.setImage(withURL: url, imageTransition: .custom(duration: 0, animationOptions: .beginFromCurrentState, animations: { imageView, image in
                         imageView.image = image
                     }, completion: { _ in
