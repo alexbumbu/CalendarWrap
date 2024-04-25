@@ -30,6 +30,9 @@
 		DD27E3C72B4EF22C00B1E660 /* PhotosPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD27E3C62B4EF22C00B1E660 /* PhotosPickerViewController.swift */; };
 		DD27E3CB2B4F156100B1E660 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD27E3CA2B4F156100B1E660 /* PhotoCell.swift */; };
 		DD27E3CD2B51633F00B1E660 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD27E3CC2B51633F00B1E660 /* PhotoPreviewViewController.swift */; };
+		DD4CFE8A2BD127AB00DD8387 /* SummaryTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4CFE892BD127AB00DD8387 /* SummaryTemplate.swift */; };
+		DD4CFE8D2BD8FBFB00DD8387 /* SummaryPostTemplatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4CFE8C2BD8FBFB00DD8387 /* SummaryPostTemplatesViewController.swift */; };
+		DD4CFE902BD9054F00DD8387 /* PostTemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4CFE8F2BD9054F00DD8387 /* PostTemplateCell.swift */; };
 		DD548DBA2B9CBA4800506768 /* GooglePhotosService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD548DB92B9CBA4800506768 /* GooglePhotosService.swift */; };
 		DD548DBC2B9CBB5F00506768 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD548DBB2B9CBB5F00506768 /* ApiError.swift */; };
 		DD59C4FE2BAA0C7E003DCF42 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD59C4FD2BAA0C7E003DCF42 /* Photo.swift */; };
@@ -94,6 +97,9 @@
 		DD27E3C62B4EF22C00B1E660 /* PhotosPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosPickerViewController.swift; sourceTree = "<group>"; };
 		DD27E3CA2B4F156100B1E660 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		DD27E3CC2B51633F00B1E660 /* PhotoPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewController.swift; sourceTree = "<group>"; };
+		DD4CFE892BD127AB00DD8387 /* SummaryTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryTemplate.swift; sourceTree = "<group>"; };
+		DD4CFE8C2BD8FBFB00DD8387 /* SummaryPostTemplatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryPostTemplatesViewController.swift; sourceTree = "<group>"; };
+		DD4CFE8F2BD9054F00DD8387 /* PostTemplateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTemplateCell.swift; sourceTree = "<group>"; };
 		DD548DB92B9CBA4800506768 /* GooglePhotosService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GooglePhotosService.swift; sourceTree = "<group>"; };
 		DD548DBB2B9CBB5F00506768 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		DD548DBD2B9CD11900506768 /* Config.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.debug.xcconfig; sourceTree = "<group>"; };
@@ -217,7 +223,7 @@
 				DD0C807A29FAF13E00DDC73A /* UIRouteNavigator.swift */,
 				DD038551298D3DF000F8474F /* SegueNavigation.swift */,
 				DD038535298BFC2800F8474F /* LoginViewController.swift */,
-				DDC06A6F2A4735E100792EDE /* CreateSummaryPostViewController.swift */,
+				DD4CFE8B2BD8FBAA00DD8387 /* CreateSummaryPostViewController */,
 				DD27E3C82B4F151400B1E660 /* PhotosPickerViewController */,
 				DD27E3CC2B51633F00B1E660 /* PhotoPreviewViewController.swift */,
 				DD0C807829FACAE800DDC73A /* SettingsViewController.swift */,
@@ -247,6 +253,7 @@
 				DDE8EA462B4DC034009D68DB /* GooglePhoto */,
 				DDE8EA3F2B4D78C1009D68DB /* PhotoAlbum */,
 				DD038559298DB17A00F8474F /* SummaryPost.swift */,
+				DD4CFE892BD127AB00DD8387 /* SummaryTemplate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -281,6 +288,24 @@
 				DD27E3CA2B4F156100B1E660 /* PhotoCell.swift */,
 				DD960F722B989DED004B960A /* PhotoAlbumHeaderView.swift */,
 				DD5F8CB62BA895B50098CA8F /* AlbumCell.swift */,
+			);
+			path = "Reusable Views";
+			sourceTree = "<group>";
+		};
+		DD4CFE8B2BD8FBAA00DD8387 /* CreateSummaryPostViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DD4CFE8E2BD9052800DD8387 /* Reusable Views */,
+				DDC06A6F2A4735E100792EDE /* CreateSummaryPostViewController.swift */,
+				DD4CFE8C2BD8FBFB00DD8387 /* SummaryPostTemplatesViewController.swift */,
+			);
+			path = CreateSummaryPostViewController;
+			sourceTree = "<group>";
+		};
+		DD4CFE8E2BD9052800DD8387 /* Reusable Views */ = {
+			isa = PBXGroup;
+			children = (
+				DD4CFE8F2BD9054F00DD8387 /* PostTemplateCell.swift */,
 			);
 			path = "Reusable Views";
 			sourceTree = "<group>";
@@ -403,6 +428,7 @@
 				DD03852A298BFC2800F8474F /* Sources */,
 				DD03852B298BFC2800F8474F /* Frameworks */,
 				DD03852C298BFC2800F8474F /* Resources */,
+				DD4CFE852BD1054300DD8387 /* Copy SummaryTemplates */,
 				CCBC1376B96455A9C4D6FD3C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -503,6 +529,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EventDigest/Pods-EventDigest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DD4CFE852BD1054300DD8387 /* Copy SummaryTemplates */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy SummaryTemplates";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SOURCE_PLIST=\"${PROJECT_DIR}/Resources/SummaryTemplates.plist\"\nDESTINATION_PLIST=\"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\n\n# Check if source plist file exists\nif [ ! -f \"${SOURCE_PLIST}\" ]; then\n    echo \"Warning: SummaryTemplates file not found at ${SOURCE_PLIST}\"\n    exit 0\nfi\n\n# Copy the plist file\ncp \"${SOURCE_PLIST}\" \"${DESTINATION_PLIST}\"\n\n# Check if copy operation was successful\nif [ $? -eq 0 ]; then\n    echo \"SummaryTemplates file copied successfully to ${DESTINATION_PLIST}\"\nelse\n    echo \"Error: Failed to copy SummaryTemplates file to ${DESTINATION_PLIST}\"\n    exit 1\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -522,6 +566,7 @@
 				DD5FA4782B6D329A001B0361 /* UINavigationController + Root.swift in Sources */,
 				DD0C807929FACAE800DDC73A /* SettingsViewController.swift in Sources */,
 				DDE8EA3D2B4D6E2A009D68DB /* GTLRPhotosLibraryObjects.m in Sources */,
+				DD4CFE8D2BD8FBFB00DD8387 /* SummaryPostTemplatesViewController.swift in Sources */,
 				DDDF21CF29AE962500360533 /* Cache+Session.swift in Sources */,
 				DD27E3C72B4EF22C00B1E660 /* PhotosPickerViewController.swift in Sources */,
 				DD59C5002BAA0CBD003DCF42 /* PlaceholderPhoto.swift in Sources */,
@@ -546,10 +591,12 @@
 				DD038556298D68C600F8474F /* Logger.swift in Sources */,
 				DD0C807B29FAF13E00DDC73A /* UIRouteNavigator.swift in Sources */,
 				DD5B1C482A40732000EE545E /* GoogleLoginService.swift in Sources */,
+				DD4CFE8A2BD127AB00DD8387 /* SummaryTemplate.swift in Sources */,
 				DDE8EA3C2B4D6E2A009D68DB /* GTLRPhotosLibraryQuery.m in Sources */,
 				DD03856529956AEA00F8474F /* Cache.swift in Sources */,
 				DDFB3C8E2B9C7BAF002215D4 /* GradientView.swift in Sources */,
 				DDF7B2582BAD9C36009BBC85 /* Storyboard.swift in Sources */,
+				DD4CFE902BD9054F00DD8387 /* PostTemplateCell.swift in Sources */,
 				DD038534298BFC2800F8474F /* SceneDelegate.swift in Sources */,
 				DDE8EA412B4D78E5009D68DB /* PhotoAlbum.swift in Sources */,
 				DD27E3CB2B4F156100B1E660 /* PhotoCell.swift in Sources */,

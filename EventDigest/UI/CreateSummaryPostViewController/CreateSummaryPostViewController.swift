@@ -20,6 +20,7 @@ class CreateSummaryPostViewController: UITableViewController, SettingsViewContro
     var didUpdateActiveCalendar: (() -> Void)?
     
     @IBOutlet private weak var publishButton: UIButton!
+    @IBOutlet private weak var changeTemplateButton: UIButton!
     @IBOutlet private weak var startTimeDatePicker: UIDatePicker!
     @IBOutlet private weak var endTimeDatePicker: UIDatePicker!
     @IBOutlet private weak var summaryTextView: UITextView!
@@ -32,6 +33,11 @@ class CreateSummaryPostViewController: UITableViewController, SettingsViewContro
     private var routesNavigator = UIRoutesNavigator.shared
     
     private var post: SummaryPost
+    private var postTemplate: SummaryTemplate? {
+        didSet {
+            changeTemplateButton.setTitle(postTemplate?.name, for: .normal)
+        }
+    }
     
     private var publishNow: Bool { publishNowSwitch.isOn }
     private var scheduledDate: Date { scheduledDatePicker.date }
@@ -63,6 +69,7 @@ class CreateSummaryPostViewController: UITableViewController, SettingsViewContro
 
     required init?(coder: NSCoder) {
         self.post = SummaryPost()
+        self.postTemplate = Cache.Preferences.summaryPostTemplate.load(decode: true)
         
         super.init(coder: coder)
     }
@@ -78,6 +85,7 @@ class CreateSummaryPostViewController: UITableViewController, SettingsViewContro
         
         setupDelegate()
         setupUI()
+        
         Task {
             await getEvents(serviceType: calendarServiceType)
             reloadUI()
@@ -119,10 +127,23 @@ class CreateSummaryPostViewController: UITableViewController, SettingsViewContro
     }
 }
 
+extension CreateSummaryPostViewController: UIAdaptivePresentationControllerDelegate {
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        // restore UI
+        tableView.isUserInteractionEnabled = true
+        changeTemplateButton.setTitleColor(UIColor.tintColor, for: .normal)
+    }
+}
+
 extension CreateSummaryPostViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 1 {
+        if indexPath.section == 2 {
             return UITableView.automaticDimension
         }
         
@@ -130,7 +151,7 @@ extension CreateSummaryPostViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 2 && publishNowSwitch.isOn {
+        if section == 3 && publishNowSwitch.isOn {
             return 1
         }
         
@@ -162,6 +183,32 @@ private extension CreateSummaryPostViewController {
     
     @IBSegueAction private func showSettings(coder: NSCoder, sender: Any?, segueIdentifier: String) -> SettingsViewController? {
         SettingsViewController(coder: coder, delegate: self)
+    }
+    
+    @IBAction func changeTemplateAction(_ sender: UIButton) {
+        // mimic the date picker look and feel
+        changeTemplateButton.setTitleColor(tableView.tintColor, for: .normal)
+        
+        let vc: SummaryPostTemplatesViewController = Storyboard.Main.instantiateViewController { [weak self] coder in
+            SummaryPostTemplatesViewController(selectedTemplate: self?.postTemplate, coder: coder)
+        }
+        
+        vc.didSelectTemplate = { [weak self] template in
+            self?.postTemplate = template
+            self?.refreshSummary()
+            
+            Cache.Preferences.summaryPostTemplate.save(template, encode: true)
+        }
+                
+        vc.preferredContentSize = CGSize(width: view.bounds.width * 0.66, height: view.bounds.height * 0.3)
+        vc.modalPresentationStyle = .popover
+        vc.popoverPresentationController?.sourceView = sender
+        vc.presentationController?.delegate = self
+
+        present(vc, animated: true) { [weak self] in
+            // disable interactions to avoid conflicts when triggering the date pickers
+            self?.tableView.isUserInteractionEnabled = false
+        }
     }
     
     @IBAction func startTimeDatePickerValueChanged(_ sender: UIDatePicker) {
@@ -214,6 +261,8 @@ private extension CreateSummaryPostViewController {
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
+        
+        changeTemplateButton.setTitle(postTemplate?.name, for: .normal)
         
         startTimeDatePicker.date = startTimeRange
         endTimeDatePicker.date = endTimeRange
@@ -293,12 +342,12 @@ private extension CreateSummaryPostViewController {
             }
         }
     }
-    
-    func generatePostSummary() -> String {
-        let intro = ""
-        let end = ""
         
-        return post.summary(introText: intro, endText: end)
+    func generatePostSummary() -> String {
+        let intro = postTemplate?.intro ?? ""
+        let ending = postTemplate?.ending ?? ""
+        
+        return post.summary(introText: intro, endText: ending)
     }
     
     func addPhoto(url: URL) {

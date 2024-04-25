@@ -63,7 +63,7 @@ class PhotosPickerViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @IBAction func showAlbumsVisibilityToggleAction(_ sender: Any) {
+    @IBAction func showAlbumsVisibilityToggleAction(_ sender: UIBarButtonItem) {
         let vc: ToggleAlbumsVisibilityViewController = Storyboard.Photo.instantiateViewController(creator: { [weak self] coder in
             ToggleAlbumsVisibilityViewController(albums: self?.albums ?? [PhotoAlbum](),
                                      hiddenAlbums: self?.hiddenAlbums ?? [PhotoAlbum](),
@@ -71,9 +71,9 @@ class PhotosPickerViewController: UIViewController {
         })
         
         let this = self
-        vc.didHideAlbum = { [weak self] album in
-            self?.hiddenAlbums.append(album)
-            self?.photosCollectionViewController?.hide(album: album)
+        vc.didHideAlbum = { album in
+            this.hiddenAlbums.append(album)
+            this.photosCollectionViewController?.hide(album: album)
         }
         vc.didShowAlbum = { album in
             do {
@@ -89,14 +89,12 @@ class PhotosPickerViewController: UIViewController {
         
         vc.preferredContentSize = CGSize(width: view.bounds.width * 0.66, height: view.bounds.height * 0.4)
         vc.modalPresentationStyle = .popover
-        if let pres = vc.presentationController {
-            pres.delegate = self
-        }
+        vc.presentationController?.delegate = self
+        vc.popoverPresentationController?.sourceItem = sender
         
         self.present(vc, animated: true)
         if let pop = vc.popoverPresentationController {
-            pop.sourceView = (sender as! UIView)
-            pop.sourceRect = (sender as! UIView).bounds
+            
         }
     }
 }

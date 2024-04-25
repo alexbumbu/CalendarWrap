@@ -1,8 +1,10 @@
 .DS_Store
 
-## Config files
+## Branding files
 Config.debug.xcconfig
 Config.release.xcconfig
+SummaryTemplates.plist
+
 
 ## User settings
 xcuserdata/

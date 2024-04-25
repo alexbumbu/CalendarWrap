@@ -30,9 +30,9 @@ class SettingsViewController: UITableViewController {
         self.delegate = delegate
     }
     
-    @available(*, deprecated, message: "Use `init(coder:delegate:)` instead")
+    @available(*, unavailable, renamed: "init(coder:delegate:)")
     required init?(coder: NSCoder) {
-        fatalError("Use `init(coder:delegate:)` to initialize a `SettingsViewController` instance.")
+        fatalError("Invalid way of decoding this class")
     }
     
     deinit {

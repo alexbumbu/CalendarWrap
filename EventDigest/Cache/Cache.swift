@@ -24,6 +24,7 @@ extension Cache {
     enum Preferences: CaseIterable, Cacheable, DefaultsRegistrable {
         case useFacebookCalendar
         case useGoogleCalendar
+        case summaryPostTemplate
     }
     
     enum Session: CaseIterable, Cacheable {
@@ -91,5 +92,5 @@ extension Cacheable {
 
 private protocol DefaultsRegistrable {
     
-    func registerDefaults(_ value: Any)
+    func registerDefaults(_ value: Any, encode: Bool)
 }
