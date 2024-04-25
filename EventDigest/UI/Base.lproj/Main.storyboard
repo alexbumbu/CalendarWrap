@@ -137,6 +137,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="eRX-9m-kEt"/>
                         <constraints>
                             <constraint firstItem="Wt9-CI-2gA" firstAttribute="top" secondItem="tFP-KZ-eAt" secondAttribute="top" id="2aG-TV-TX8"/>
                             <constraint firstItem="Wt9-CI-2gA" firstAttribute="leading" secondItem="tFP-KZ-eAt" secondAttribute="leading" id="IIP-QU-qwA"/>
@@ -160,7 +161,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="pgw-2W-tQi">
-                            <rect key="frame" x="0.0" y="812.99999809265137" width="393" height="125.99999999999989"/>
+                            <rect key="frame" x="0.0" y="812.99999809265137" width="393" height="126"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJE-ah-Q7r">
@@ -329,44 +330,62 @@
                                                                     <color key="backgroundColor" name="BrightGray"/>
                                                                     <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </imageView>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s6e-Z5-zcV">
-                                                                    <rect key="frame" x="305" y="150" width="48" height="48"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="48" id="s8z-TX-Uyg"/>
-                                                                        <constraint firstAttribute="height" constant="48" id="yz8-Ac-X1W"/>
-                                                                    </constraints>
-                                                                    <color key="tintColor" systemColor="systemRedColor"/>
-                                                                    <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="plain" image="xmark.bin.circle" catalog="system"/>
-                                                                    <connections>
-                                                                        <action selector="removePhotoAction" destination="oEI-wD-R5s" eventType="touchUpInside" id="pjp-dH-hab"/>
-                                                                    </connections>
-                                                                </button>
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="s6e-Z5-zcV" secondAttribute="trailing" id="HH7-GS-VMc"/>
                                                                 <constraint firstItem="P2b-6B-ysT" firstAttribute="top" secondItem="MIp-lg-xJ8" secondAttribute="top" id="IG9-Wo-jqJ"/>
-                                                                <constraint firstAttribute="bottom" secondItem="s6e-Z5-zcV" secondAttribute="bottom" constant="0.66666666666665719" id="RVe-El-0TU"/>
                                                                 <constraint firstAttribute="trailing" secondItem="P2b-6B-ysT" secondAttribute="trailing" id="Yu0-Ea-XZb"/>
                                                                 <constraint firstAttribute="bottom" secondItem="P2b-6B-ysT" secondAttribute="bottom" id="gW6-YE-Hz3"/>
                                                                 <constraint firstAttribute="width" secondItem="MIp-lg-xJ8" secondAttribute="height" multiplier="16:9" id="hd2-3C-Ide"/>
                                                                 <constraint firstItem="P2b-6B-ysT" firstAttribute="leading" secondItem="MIp-lg-xJ8" secondAttribute="leading" id="pie-W8-fOO"/>
                                                             </constraints>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Cx-H2-mPv">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nVB-Zo-Kpk">
                                                             <rect key="frame" x="0.0" y="198.66666666666666" width="353" height="54"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="54" id="ZVY-Mg-Jhj"/>
-                                                            </constraints>
-                                                            <color key="tintColor" systemColor="systemGray2Color"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="plain" image="photo.on.rectangle.angled" catalog="system"/>
-                                                            <connections>
-                                                                <segue destination="rU9-L9-YAS" kind="presentation" identifier="showPhotosPickerSegue" id="dgR-hf-t9V"/>
-                                                            </connections>
-                                                        </button>
+                                                            <subviews>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hGy-n5-pJg">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="353" height="54"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Cx-H2-mPv">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="353" height="54"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="54" id="ZVY-Mg-Jhj"/>
+                                                                            </constraints>
+                                                                            <color key="tintColor" systemColor="systemGray2Color"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="Button"/>
+                                                                            <buttonConfiguration key="configuration" style="plain" image="photo.on.rectangle.angled" catalog="system"/>
+                                                                            <connections>
+                                                                                <segue destination="rU9-L9-YAS" kind="presentation" identifier="showPhotosPickerSegue" id="dgR-hf-t9V"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w8J-nN-1Ms">
+                                                                            <rect key="frame" x="299" y="0.0" width="54" height="54"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="54" id="6Xg-K0-t51"/>
+                                                                                <constraint firstAttribute="height" constant="54" id="uJm-8g-GoC"/>
+                                                                            </constraints>
+                                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                                            <state key="normal" title="Button"/>
+                                                                            <buttonConfiguration key="configuration" style="plain" image="xmark.bin.circle" catalog="system"/>
+                                                                            <connections>
+                                                                                <action selector="removePhotoAction" destination="oEI-wD-R5s" eventType="touchUpInside" id="zpo-Il-WoQ"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                    <constraints>
+                                                                        <constraint firstItem="3Cx-H2-mPv" firstAttribute="centerX" secondItem="hGy-n5-pJg" secondAttribute="centerX" id="715-vk-WWE"/>
+                                                                        <constraint firstItem="3Cx-H2-mPv" firstAttribute="centerY" secondItem="hGy-n5-pJg" secondAttribute="centerY" id="AEw-Wn-vzh"/>
+                                                                        <constraint firstItem="3Cx-H2-mPv" firstAttribute="width" secondItem="hGy-n5-pJg" secondAttribute="width" id="FdJ-W7-h5i"/>
+                                                                        <constraint firstItem="3Cx-H2-mPv" firstAttribute="height" secondItem="hGy-n5-pJg" secondAttribute="height" id="WzD-YE-Ve7"/>
+                                                                        <constraint firstItem="w8J-nN-1Ms" firstAttribute="top" secondItem="hGy-n5-pJg" secondAttribute="top" id="aBd-7b-Cbn"/>
+                                                                        <constraint firstAttribute="height" constant="54" id="vMB-ON-Goj"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="w8J-nN-1Ms" secondAttribute="trailing" id="xxY-0t-Y8D"/>
+                                                                    </constraints>
+                                                                </view>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="MIp-lg-xJ8" firstAttribute="width" secondItem="QjG-fI-oCS" secondAttribute="width" id="Y48-8J-oI1"/>
@@ -465,6 +484,7 @@
                         <outlet property="endTimeDatePicker" destination="WzF-RP-VgJ" id="52R-Nx-h8S"/>
                         <outlet property="publishButton" destination="xJE-ah-Q7r" id="Ug7-zn-RqW"/>
                         <outlet property="publishNowSwitch" destination="CMu-yw-ZFk" id="MEI-cw-RRJ"/>
+                        <outlet property="removeImageButton" destination="w8J-nN-1Ms" id="pIq-jp-zQF"/>
                         <outlet property="scheduledDatePicker" destination="aiT-CD-lUD" id="NeH-5z-mv2"/>
                         <outlet property="selectImageButton" destination="3Cx-H2-mPv" id="RZl-gg-LtF"/>
                         <outlet property="selectedImageContainerView" destination="MIp-lg-xJ8" id="ngo-9C-vpe"/>

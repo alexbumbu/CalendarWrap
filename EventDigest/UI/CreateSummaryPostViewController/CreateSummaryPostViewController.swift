@@ -27,6 +27,7 @@ class CreateSummaryPostViewController: UITableViewController, SettingsViewContro
     @IBOutlet private weak var selectedImageContainerView: UIView!
     @IBOutlet private weak var selectedImageView: UIImageView!
     @IBOutlet private weak var selectImageButton: UIButton!
+    @IBOutlet private weak var removeImageButton: UIButton!
     @IBOutlet private weak var publishNowSwitch: UISwitch!
     @IBOutlet private weak var scheduledDatePicker: UIDatePicker!
         
@@ -271,6 +272,7 @@ private extension CreateSummaryPostViewController {
         
         summaryTextView.text = generatePostSummary()
         selectedImageContainerView.isHidden = true
+        removeImageButton.isHidden = true
         
         publishNowSwitch.isOn = false
         // scheduledDate must be at least 10 min from now
@@ -363,6 +365,8 @@ private extension CreateSummaryPostViewController {
         })
         selectedImageContainerView.isHidden = false
         
+        removeImageButton.isHidden = false
+        
         tableView.reloadData()
     }
     
@@ -371,6 +375,8 @@ private extension CreateSummaryPostViewController {
         
         selectedImageView.image = nil
         selectedImageContainerView.isHidden = true
+        
+        removeImageButton.isHidden = true
         
         tableView.reloadData()
     }
