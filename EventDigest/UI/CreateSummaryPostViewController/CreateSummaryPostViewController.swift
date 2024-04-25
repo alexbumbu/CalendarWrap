@@ -239,8 +239,10 @@ private extension CreateSummaryPostViewController {
         removePhoto()
     }
     
-    @IBAction func publishedSwitchValueChanged(_ sender: UISwitch) {        
+    @IBAction func publishedSwitchValueChanged(_ sender: UISwitch) {
         tableView.reloadData()
+        
+        publishButton.setTitle(sender.isOn ? "Publish now" : "Schedule", for: .normal)
     }
     
     @IBAction func publishAction() {
@@ -274,6 +276,8 @@ private extension CreateSummaryPostViewController {
         // scheduledDate must be at least 10 min from now
         scheduledDatePicker.minimumDate = Date(timeIntervalSinceNow: 15*60)
         scheduledDatePicker.date = Date(timeIntervalSinceNow: 60*60)
+
+        publishButton.setTitle(publishNowSwitch.isOn ? "Publish now" : "Schedule", for: .normal)
     }
     
     func reloadUI() {
