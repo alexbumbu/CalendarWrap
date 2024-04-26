@@ -84,7 +84,7 @@ private extension SummaryPostTemplatesViewController {
                 let data = try Data(contentsOf: fileURL)
                 templates = try decoder.decode([SummaryTemplate].self, from: data)
             } catch {
-                Logger.debug.error("decoding SummaryTemplates failure: \(error)")
+                Logger.ui.debug("decoding SummaryTemplates failure: \(error)")
             }
         }
         
