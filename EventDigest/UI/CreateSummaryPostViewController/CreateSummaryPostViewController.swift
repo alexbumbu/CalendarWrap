@@ -249,8 +249,11 @@ private extension CreateSummaryPostViewController {
     @IBAction func publishAction() {
         Task {
             if await facebookLogIn(), let page = await selectFacebookPage() {
-                postSummary(pageId: page.id)
+                showSpinner()
+                await postSummary(pageId: page.id)
             }
+            
+            hideSpinner()
         }
     }
 }
@@ -405,7 +408,7 @@ private extension CreateSummaryPostViewController {
         post.events = events
     }
     
-    func postSummary(pageId: String) {
+    func postSummary(pageId: String) async {
         guard
             let summary = summaryTextView.text
         else {
@@ -415,31 +418,27 @@ private extension CreateSummaryPostViewController {
         let date = publishNow ? nil : scheduledDate
         
         let this = self
-        let postSummary: (SummaryPost) -> Void = { post in
-            Task {
-                var photoId: String?
-                if let photoURL = post.imageURL {
-                    photoId = await FacebookCalendarService.uploadPhoto(pageId: pageId, photoURL: photoURL.absoluteString, temporary: true)
-                }
-                
-                let success = await FacebookCalendarService.createSummaryPost(pageId: pageId, summary: summary, photoId: photoId, scheduledDate: date)
-                
-                if success {
-                    this.showInfoAlert(title: "Success", message: "Summary posted successfully")
-                } else {
-                    this.showInfoAlert(title: "Error", message: "Posting the summary failure")
-                }
+        let postSummary: (SummaryPost) async -> Void = { post in
+            var photoId: String?
+            if let photoURL = post.imageURL {
+                photoId = await FacebookCalendarService.uploadPhoto(pageId: pageId, photoURL: photoURL.absoluteString, temporary: true)
+            }
+            
+            let success = await FacebookCalendarService.createSummaryPost(pageId: pageId, summary: summary, photoId: photoId, scheduledDate: date)
+            
+            if success {
+                this.showInfoAlert(title: "Success", message: "Summary posted successfully")
+            } else {
+                this.showInfoAlert(title: "Error", message: "Posting the summary failure")
             }
         }
                 
         if publishNow {
-            Task {
-                if await getPublishConfirmation() {
-                    postSummary(post)
-                }
+            if await getPublishConfirmation() {
+                await postSummary(post)
             }
         } else {
-            postSummary(post)
+            await postSummary(post)
         }
     }
 }
