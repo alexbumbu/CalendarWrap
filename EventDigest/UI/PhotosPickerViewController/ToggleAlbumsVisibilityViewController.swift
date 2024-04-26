@@ -47,15 +47,15 @@ extension ToggleAlbumsVisibilityViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let album = albums[indexPath.row]
-        let cell = tableView.cellForRow(at: indexPath) as! AlbumCell
+        let cell = tableView.cellForRow(at: indexPath)
         
         if hiddenAlbums.contains(where: { $0 == album}) {
-            cell.albumIsVisible = false
+            cell?.accessoryType = .checkmark
             hiddenAlbums.removeAll(where: { $0 == album})
             
             didShowAlbum?(album)
         } else {
-            cell.albumIsVisible = true
+            cell?.accessoryType = .none
             hiddenAlbums.append(album)
             
             didHideAlbum?(album)
@@ -69,12 +69,13 @@ private extension ToggleAlbumsVisibilityViewController {
         let this = self
         
         dataSource = DataSource(tableView: tableView) {tableView, indexPath, album in
-            let cell = tableView.dequeueReusableCell(withIdentifier: Constants.albumCellIdentifier) as? AlbumCell
-            cell?.titleLabel.text = album.title
+            let cell = tableView.dequeueReusableCell(withIdentifier: Constants.albumCellIdentifier)
             
-            if this.hiddenAlbums.contains(where: { $0 == album}) {
-                cell?.albumIsVisible = true
-            }
+            var content = cell?.defaultContentConfiguration()
+            content?.text = album.title
+
+            cell?.contentConfiguration = content
+            cell?.accessoryType = this.hiddenAlbums.contains(where: { $0 == album}) ? .none : .checkmark
             
             return cell
         }
