@@ -24,7 +24,7 @@ struct SummaryPost {
         
         var lastDateHeader = ""
         let summary = events?.reduce(into: "") { partialResult, event in
-            let dateHeader = dateFormatter.string(from: event.startTime) + event.startTime.daySuffix() + ":"
+            let dateHeader = (dateFormatter.string(from: event.startTime) + event.startTime.daySuffix() + ":").boldUnicode()
             if dateHeader != lastDateHeader {
                 partialResult.append("\(dateHeader)\n\n")
                 lastDateHeader = dateHeader
@@ -32,7 +32,7 @@ struct SummaryPost {
             
             let location = event.location != nil ? "at \(event.location!)" : "location N/A"
             let startTime = timeFormatter.string(from: event.startTime)
-            let eventSummary = "\(event.name), \(event.isOnline ? "online" : location),🕒 \(startTime)\n\n"
+            let eventSummary = "\(event.name), \(event.isOnline ? "online" : location) 🕒 \(startTime)\n\n"
             partialResult.append(eventSummary)
         } ?? ""
                 
