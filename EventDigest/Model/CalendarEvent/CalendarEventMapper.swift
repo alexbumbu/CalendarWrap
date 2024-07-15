@@ -49,11 +49,12 @@ struct GoogleEventMapper: CalendarEventMapper {
         guard
             let id = event.identifier,
             let name = event.summary,
-            let startTime = event.start?.dateTime?.date,
-            let location = event.location
+            let startTime = event.start?.dateTime?.date
         else {
             return nil
         }
+        
+        let location = event.location
         
         // TODO: isOnline is false by default for google events. Figure out solution if needed.
         return CalendarEvent(id: id, name: name, location: location, startTime: startTime, isOnline: false)
