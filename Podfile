@@ -15,7 +15,6 @@ target 'EventDigest' do
   pod 'FBSDKShareKit'
   pod 'GoogleSignIn'
   pod 'GoogleAPIClientForREST/Calendar'
-  pod 'MBProgressHUD'
   
   post_install do |installer|
       installer.generated_projects.each do |project|
