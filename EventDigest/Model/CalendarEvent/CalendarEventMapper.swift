@@ -49,7 +49,7 @@ struct GoogleEventMapper: CalendarEventMapper {
         guard
             let id = event.identifier,
             let name = event.summary,
-            let startTime = event.start?.dateTime?.date
+            let startTime = event.start?.dateTime?.date ?? event.start?.date?.date.startOfDay()
         else {
             return nil
         }
@@ -62,5 +62,14 @@ struct GoogleEventMapper: CalendarEventMapper {
     
     static func mapEvents(from events: Array<GTLRCalendar_Event>) -> [CalendarEvent] {
         events.compactMap() { mapEvent(from: $0) }
+    }
+}
+
+// MARK: -
+
+private extension Date {
+    
+    func startOfDay() -> Date {
+        Calendar.current.startOfDay(for: self)
     }
 }

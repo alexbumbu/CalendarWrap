@@ -103,7 +103,7 @@ extension Request {
 
 // MARK: -
 
-typealias Page = Calendar
+typealias Page = EventsCalendar
 
 struct FacebookCalendarService: CalendarService {
     static var permissions: [String] {[
@@ -114,7 +114,7 @@ struct FacebookCalendarService: CalendarService {
         "business_management",
     ]}
         
-    static func getCalendars() async -> [Calendar]? {
+    static func getCalendars() async -> [EventsCalendar]? {
         do {
             let response = try await Request.pages.perform()
             guard let data = response["data"] as? [[String: Any]] else {

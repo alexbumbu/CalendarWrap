@@ -58,7 +58,7 @@ struct GoogleCalendarService: CalendarService {
         kGTLRAuthScopePhotosLibrary
     ]}
     
-    static func getCalendars() async -> [Calendar]?  {
+    static func getCalendars() async -> [EventsCalendar]?  {
         do {
             let calendarList: GTLRCalendar_CalendarList = try await Request.calendars.perform()
             guard let items = calendarList.items else {

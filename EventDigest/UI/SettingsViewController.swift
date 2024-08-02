@@ -186,7 +186,7 @@ private extension SettingsViewController {
             return
         }
                 
-        let calendar = await withCheckedContinuation({ (continuation:CheckedContinuation<Calendar?, Never>) in
+        let calendar = await withCheckedContinuation({ (continuation:CheckedContinuation<EventsCalendar?, Never>) in
             let alert = UIAlertController(title: "Select calendar", message: "", preferredStyle: .actionSheet)
 
             calendars.forEach { calendar in

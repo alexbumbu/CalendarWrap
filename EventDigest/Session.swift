@@ -9,14 +9,14 @@ import Foundation
 
 struct Session {
         
-    var calendars: [Calendar]
-    var activeCalendar: Calendar {
+    var calendars: [EventsCalendar]
+    var activeCalendar: EventsCalendar {
         didSet {
             saveToCache()
         }
     }
     
-    init?(calendars: [Calendar]) {
+    init?(calendars: [EventsCalendar]) {
         guard let calendar = calendars.first else {
             return nil
         }
@@ -40,7 +40,7 @@ private extension Session {
     }
     
     static func loadFromCache() -> Session? {
-        guard let calendar: Calendar = Cache.Session.currentCalendar.load(decode: true) else {
+        guard let calendar: EventsCalendar = Cache.Session.currentCalendar.load(decode: true) else {
             return nil
         }
         

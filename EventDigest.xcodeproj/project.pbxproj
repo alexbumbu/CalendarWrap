@@ -20,7 +20,7 @@
 		DD038556298D68C600F8474F /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD038555298D68C600F8474F /* Logger.swift */; };
 		DD038558298D8DBF00F8474F /* CalendarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD038557298D8DBF00F8474F /* CalendarEvent.swift */; };
 		DD03855A298DB17A00F8474F /* SummaryPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD038559298DB17A00F8474F /* SummaryPost.swift */; };
-		DD0385612994273800F8474F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0385602994273800F8474F /* Calendar.swift */; };
+		DD0385612994273800F8474F /* EventsCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0385602994273800F8474F /* EventsCalendar.swift */; };
 		DD0385632995203C00F8474F /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0385622995203C00F8474F /* Session.swift */; };
 		DD03856529956AEA00F8474F /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD03856429956AEA00F8474F /* Cache.swift */; };
 		DD03E8402B4EBDBC00230364 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD03E83F2B4EBDBC00230364 /* Colors.xcassets */; };
@@ -40,7 +40,7 @@
 		DD5B1C462A3F91FE00EE545E /* GoogleCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C452A3F91FE00EE545E /* GoogleCalendarService.swift */; };
 		DD5B1C482A40732000EE545E /* GoogleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C472A40732000EE545E /* GoogleLoginService.swift */; };
 		DD5B1C4C2A40B83800EE545E /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C4B2A40B83800EE545E /* CalendarService.swift */; };
-		DD5B1C4F2A40C8BE00EE545E /* CalendarMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C4E2A40C8BE00EE545E /* CalendarMapper.swift */; };
+		DD5B1C4F2A40C8BE00EE545E /* EventsCalendarMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C4E2A40C8BE00EE545E /* EventsCalendarMapper.swift */; };
 		DD5B1C562A40CF6000EE545E /* CalendarEventMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C552A40CF6000EE545E /* CalendarEventMapper.swift */; };
 		DD5F8CB32BA890000098CA8F /* ToggleAlbumsVisibilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5F8CB22BA890000098CA8F /* ToggleAlbumsVisibilityViewController.swift */; };
 		DD5FA4782B6D329A001B0361 /* UINavigationController + Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5FA4772B6D329A001B0361 /* UINavigationController + Root.swift */; };
@@ -87,7 +87,7 @@
 		DD038555298D68C600F8474F /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		DD038557298D8DBF00F8474F /* CalendarEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEvent.swift; sourceTree = "<group>"; };
 		DD038559298DB17A00F8474F /* SummaryPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryPost.swift; sourceTree = "<group>"; };
-		DD0385602994273800F8474F /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		DD0385602994273800F8474F /* EventsCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCalendar.swift; sourceTree = "<group>"; };
 		DD0385622995203C00F8474F /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		DD03856429956AEA00F8474F /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		DD03E83F2B4EBDBC00230364 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 		DD5B1C452A3F91FE00EE545E /* GoogleCalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCalendarService.swift; sourceTree = "<group>"; };
 		DD5B1C472A40732000EE545E /* GoogleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginService.swift; sourceTree = "<group>"; };
 		DD5B1C4B2A40B83800EE545E /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
-		DD5B1C4E2A40C8BE00EE545E /* CalendarMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMapper.swift; sourceTree = "<group>"; };
+		DD5B1C4E2A40C8BE00EE545E /* EventsCalendarMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsCalendarMapper.swift; sourceTree = "<group>"; };
 		DD5B1C552A40CF6000EE545E /* CalendarEventMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventMapper.swift; sourceTree = "<group>"; };
 		DD5F8CB22BA890000098CA8F /* ToggleAlbumsVisibilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleAlbumsVisibilityViewController.swift; sourceTree = "<group>"; };
 		DD5FA4772B6D329A001B0361 /* UINavigationController + Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Root.swift"; sourceTree = "<group>"; };
@@ -313,8 +313,8 @@
 		DD5B1C4D2A40C8A400EE545E /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				DD0385602994273800F8474F /* Calendar.swift */,
-				DD5B1C4E2A40C8BE00EE545E /* CalendarMapper.swift */,
+				DD0385602994273800F8474F /* EventsCalendar.swift */,
+				DD5B1C4E2A40C8BE00EE545E /* EventsCalendarMapper.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -554,7 +554,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD0385612994273800F8474F /* Calendar.swift in Sources */,
+				DD0385612994273800F8474F /* EventsCalendar.swift in Sources */,
 				DD038536298BFC2800F8474F /* LoginViewController.swift in Sources */,
 				DD03855A298DB17A00F8474F /* SummaryPost.swift in Sources */,
 				DD548DBA2B9CBA4800506768 /* GooglePhotosService.swift in Sources */,
@@ -569,7 +569,7 @@
 				DDDF21CF29AE962500360533 /* Cache+Session.swift in Sources */,
 				DD27E3C72B4EF22C00B1E660 /* PhotosPickerViewController.swift in Sources */,
 				DD59C5002BAA0CBD003DCF42 /* PlaceholderPhoto.swift in Sources */,
-				DD5B1C4F2A40C8BE00EE545E /* CalendarMapper.swift in Sources */,
+				DD5B1C4F2A40C8BE00EE545E /* EventsCalendarMapper.swift in Sources */,
 				DD038552298D3DF000F8474F /* SegueNavigation.swift in Sources */,
 				DD5B1C462A3F91FE00EE545E /* GoogleCalendarService.swift in Sources */,
 				DD0385632995203C00F8474F /* Session.swift in Sources */,
