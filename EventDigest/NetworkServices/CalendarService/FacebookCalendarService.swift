@@ -40,7 +40,7 @@ extension Request {
         case .pageAccessToken:
             return ["fields": "access_token"]
         case .events(_, let since, let until):
-            return ["fields": "name, start_time, place, is_online", "since": since, "until": until]
+            return ["fields": "name, start_time, end_time, place, is_online", "since": since, "until": until]
         case .createSummaryPost(_, let message, let photoId, let scheduledDate):
             var params: [String: Any] = ["message": message]
             if let photoId {

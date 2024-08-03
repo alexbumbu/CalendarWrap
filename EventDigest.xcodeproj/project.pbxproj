@@ -35,6 +35,7 @@
 		DD4CFE902BD9054F00DD8387 /* PostTemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4CFE8F2BD9054F00DD8387 /* PostTemplateCell.swift */; };
 		DD548DBA2B9CBA4800506768 /* GooglePhotosService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD548DB92B9CBA4800506768 /* GooglePhotosService.swift */; };
 		DD548DBC2B9CBB5F00506768 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD548DBB2B9CBB5F00506768 /* ApiError.swift */; };
+		DD573D3B2C5E251A00A12B7F /* Calendar + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD573D3A2C5E251A00A12B7F /* Calendar + Helpers.swift */; };
 		DD59C4FE2BAA0C7E003DCF42 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD59C4FD2BAA0C7E003DCF42 /* Photo.swift */; };
 		DD59C5002BAA0CBD003DCF42 /* PlaceholderPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD59C4FF2BAA0CBD003DCF42 /* PlaceholderPhoto.swift */; };
 		DD5B1C462A3F91FE00EE545E /* GoogleCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5B1C452A3F91FE00EE545E /* GoogleCalendarService.swift */; };
@@ -104,6 +105,7 @@
 		DD548DBB2B9CBB5F00506768 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		DD548DBD2B9CD11900506768 /* Config.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.debug.xcconfig; sourceTree = "<group>"; };
 		DD548DBE2B9D19AD00506768 /* Config.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.release.xcconfig; sourceTree = "<group>"; };
+		DD573D3A2C5E251A00A12B7F /* Calendar + Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Calendar + Helpers.swift"; sourceTree = "<group>"; };
 		DD59C4FD2BAA0C7E003DCF42 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		DD59C4FF2BAA0CBD003DCF42 /* PlaceholderPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderPhoto.swift; sourceTree = "<group>"; };
 		DD5B1C452A3F91FE00EE545E /* GoogleCalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCalendarService.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				DD038555298D68C600F8474F /* Logger.swift */,
 				DD0385622995203C00F8474F /* Session.swift */,
 				DD930BC22C11BA4400D6EC0A /* String + BoldUnicode.swift */,
+				DD573D3A2C5E251A00A12B7F /* Calendar + Helpers.swift */,
 				DDDF21CB29AE954200360533 /* Cache */,
 				DD03856729968C7800F8474F /* NetworkServices */,
 				DD03856629968C5B00F8474F /* Model */,
@@ -583,6 +586,7 @@
 				DDF7B25C2BBEC4D9009BBC85 /* PhotosGridCollectionViewLayout.swift in Sources */,
 				DD548DBC2B9CBB5F00506768 /* ApiError.swift in Sources */,
 				DD5B1C562A40CF6000EE545E /* CalendarEventMapper.swift in Sources */,
+				DD573D3B2C5E251A00A12B7F /* Calendar + Helpers.swift in Sources */,
 				DD038558298D8DBF00F8474F /* CalendarEvent.swift in Sources */,
 				DD0C807D29FAF14E00DDC73A /* UIRoute.swift in Sources */,
 				DD59C4FE2BAA0C7E003DCF42 /* Photo.swift in Sources */,

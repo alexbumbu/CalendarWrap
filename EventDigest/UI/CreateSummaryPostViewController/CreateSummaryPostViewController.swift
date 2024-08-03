@@ -404,7 +404,14 @@ private extension CreateSummaryPostViewController {
             return
         }
         
-        let events = await T.getEvents(calendarId: calendarId, since: startTimeRange, until: endTimeRange)
+        var events = await T.getEvents(calendarId: calendarId, since: startTimeRange, until: endTimeRange)
+        events?.enumerated().forEach { index, event in
+            // handle multiday events
+            if event.isMultiday, let multidayEvents = event.splitByDay() {
+                events?.replaceSubrange(index ... index, with: multidayEvents)
+            }
+        }
+        
         post.events = events
     }
     

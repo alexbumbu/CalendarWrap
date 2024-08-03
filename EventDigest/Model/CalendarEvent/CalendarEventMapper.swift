@@ -23,8 +23,10 @@ struct FacebookEventMapper: CalendarEventMapper {
         guard
             let id = event["id"] as? String,
             let name = event["name"] as? String,
-            let formattedTime = event["start_time"] as? String,
-            let startTime = dateFormatter.date(from: formattedTime),
+            let formattedStartTime = event["start_time"] as? String,
+            let startTime = dateFormatter.date(from: formattedStartTime),
+            let formattedEndTime = event["end_time"] as? String,
+            let endTime = dateFormatter.date(from: formattedEndTime),
             let isOnline = event["is_online"] as? Bool
         else {
             return nil
@@ -32,7 +34,7 @@ struct FacebookEventMapper: CalendarEventMapper {
         
         let place = (event as NSDictionary).value(forKeyPath: "place.name") as? String
         
-        return CalendarEvent(id: id, name: name, location: place, startTime: startTime, isOnline: isOnline)
+        return CalendarEvent(id: id, name: name, location: place, startTime: startTime, endTime: endTime, isOnline: isOnline)
     }
     
     static func mapEvents(from events: Array<[String: Any]>) -> [CalendarEvent] {
@@ -49,7 +51,8 @@ struct GoogleEventMapper: CalendarEventMapper {
         guard
             let id = event.identifier,
             let name = event.summary,
-            let startTime = event.start?.dateTime?.date ?? event.start?.date?.date.startOfDay()
+            let startTime = event.start?.dateTime?.date ?? event.start?.date?.date.startOfDay(),
+            let endTime = event.end?.dateTime?.date ?? event.end?.date?.date.endOfDay()
         else {
             return nil
         }
@@ -57,7 +60,7 @@ struct GoogleEventMapper: CalendarEventMapper {
         let location = event.location
         
         // TODO: isOnline is false by default for google events. Figure out solution if needed.
-        return CalendarEvent(id: id, name: name, location: location, startTime: startTime, isOnline: false)
+        return CalendarEvent(id: id, name: name, location: location, startTime: startTime, endTime: endTime, isOnline: false)
     }
     
     static func mapEvents(from events: Array<GTLRCalendar_Event>) -> [CalendarEvent] {
@@ -71,5 +74,9 @@ private extension Date {
     
     func startOfDay() -> Date {
         Calendar.current.startOfDay(for: self)
+    }
+    
+    func endOfDay() -> Date {
+        Calendar.current.endOfDay(for: self)
     }
 }
