@@ -54,18 +54,20 @@ class CreateSummaryPostViewController: UITableViewController, SettingsViewContro
         }
     }
     
-    private lazy var startTimeRange: Date = {
+    private lazy var timeRange: DateInterval = {
+        // default startDate is Thursday - today or next Thursday
+        let startDate: Date
         let now = Date()
-                
-        // Thursday 12 PM - today or next Thursday
+        
         if now.isThursday() {
-            return Foundation.Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: now)!
+            startDate = Calendar.current.startOfDay(for: now)
         } else {
-            return Foundation.Calendar.current.nextThursday(hour: 12, minute: 0, after: now)!
+            startDate = Calendar.current.nextThursday(after: now)!
         }
-    }()
-    private lazy var endTimeRange: Date = {
-        return Foundation.Calendar.current.nextWednesday(hour: 23, minute: 59, after: startTimeRange)!
+        
+        let endDate = Calendar.current.nextWednesday(hour: 23, minute: 59, after: startDate)!
+        
+        return DateInterval(start: startDate, end: endDate)
     }()
 
     required init?(coder: NSCoder) {
@@ -213,7 +215,9 @@ private extension CreateSummaryPostViewController {
     }
     
     @IBAction func startTimeDatePickerValueChanged(_ sender: UIDatePicker) {
-        startTimeRange = sender.date
+        timeRange.start = sender.date
+        
+        endTimeDatePicker.date = timeRange.end
         
         showSpinner()
         Task {
@@ -225,7 +229,7 @@ private extension CreateSummaryPostViewController {
     }
     
     @IBAction func endTimeDatePickerValueChanged(_ sender: UIDatePicker) {
-        endTimeRange = sender.date
+        timeRange.end = sender.date
         
         showSpinner()
         Task {
@@ -270,8 +274,8 @@ private extension CreateSummaryPostViewController {
         
         changeTemplateButton.setTitle(postTemplate?.name, for: .normal)
         
-        startTimeDatePicker.date = startTimeRange
-        endTimeDatePicker.date = endTimeRange
+        startTimeDatePicker.date = timeRange.start
+        endTimeDatePicker.date = timeRange.end
         
         summaryTextView.text = generatePostSummary()
         selectedImageContainerView.isHidden = true
@@ -404,7 +408,11 @@ private extension CreateSummaryPostViewController {
             return
         }
         
-        var events = await T.getEvents(calendarId: calendarId, since: startTimeRange, until: endTimeRange)
+        // filter out events that started before the selected time
+        var events = await T.getEvents(calendarId: calendarId, since: timeRange.start, until: timeRange.end)?.filter {
+            $0.startTime >= timeRange.start
+        }
+        
         events?.enumerated().forEach { index, event in
             // handle multiday events
             if event.isMultiday, let multidayEvents = event.splitByDay() {
@@ -455,14 +463,14 @@ private extension CreateSummaryPostViewController {
 
 private extension Foundation.Calendar {
     
-    func nextThursday(hour: Int, minute: Int, after date: Date) -> Date?  {
-        return Foundation.Calendar.current.nextDate(after: date,
+    func nextThursday(hour: Int = 0, minute: Int = 0, after date: Date) -> Date?  {
+        return Calendar.current.nextDate(after: date,
                                          matching: DateComponents(hour: hour, minute: minute, weekday: 5),
                                          matchingPolicy: .previousTimePreservingSmallerComponents)
     }
     
-    func nextWednesday(hour: Int, minute: Int, after date: Date) -> Date?  {
-        return Foundation.Calendar.current.nextDate(after: date,
+    func nextWednesday(hour: Int = 0, minute: Int = 0, after date: Date) -> Date?  {
+        return Calendar.current.nextDate(after: date,
                                          matching: DateComponents(hour: hour, minute: minute, weekday: 4),
                                          matchingPolicy: .previousTimePreservingSmallerComponents)
     }
