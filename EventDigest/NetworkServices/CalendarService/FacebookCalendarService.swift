@@ -110,8 +110,7 @@ struct FacebookCalendarService: CalendarService {
         "public_profile",
         "business_management",
         "pages_read_engagement",
-        "pages_manage_posts",
-        "business_management",
+        "pages_manage_posts"
     ]}
         
     static func getCalendars() async -> [EventsCalendar]? {
