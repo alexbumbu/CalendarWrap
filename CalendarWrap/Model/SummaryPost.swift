@@ -32,7 +32,7 @@ struct SummaryPost {
             
             let location = event.location != nil ? "\(event.location!)" : "location N/A"
             let startTime = timeFormatter.string(from: event.startTime)
-            let eventSummary = "\(event.name) 📍\(event.isOnline ? "online" : location) 🕒 \(startTime)\n\n"
+            let eventSummary = "\(event.name)📍\(event.isOnline ? "online" : location) 🕒 \(startTime)\n\n"
             partialResult.append(eventSummary)
         } ?? ""
                 
